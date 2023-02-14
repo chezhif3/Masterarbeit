@@ -16,6 +16,7 @@ namespace Valve.VR.InteractionSystem
 		public Transform startPosition;
 		public Transform endPosition;
 		public LinearMapping linearMapping;
+        public bool initReposition = false;
 		public bool repositionGameObject = true;
 		public bool maintainMomemntum = true;
 		public float momemtumDampenRate = 5.0f;
@@ -52,7 +53,7 @@ namespace Valve.VR.InteractionSystem
 
             initialMappingOffset = linearMapping.value;
 
-			if ( repositionGameObject )
+			if (initReposition)
 			{
 				UpdateLinearMapping( transform );
 			}
@@ -137,7 +138,7 @@ namespace Valve.VR.InteractionSystem
 				mappingChangeRate = Mathf.Lerp( mappingChangeRate, 0.0f, momemtumDampenRate * Time.deltaTime );
 				linearMapping.value = Mathf.Clamp01( linearMapping.value + ( mappingChangeRate * Time.deltaTime ) );
 
-				if ( repositionGameObject )
+				if ( initReposition )
 				{
 					transform.position = Vector3.Lerp( startPosition.position, endPosition.position, linearMapping.value );
 				}

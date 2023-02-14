@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class CoAxial : MonoBehaviour
 {
-    bool captured = false;
+    // bool captured = false;
     // Start is called before the first frame update
+  //  public Transform nextObject;
     void Start()
     {
 
@@ -19,16 +20,29 @@ public class CoAxial : MonoBehaviour
 
         RaycastHit hit;
         GameObject gameObject;
+        GameObject parentObject;
+        GameObject nextObject;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up),out hit, Mathf.Infinity,layerMask)&&(!captured))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up),out hit, Mathf.Infinity,layerMask))
         {
             Debug.Log("Did Hit");
             gameObject = hit.transform.gameObject;
-            gameObject.GetComponent<Rigidbody>().useGravity = false;
-            gameObject.GetComponent<Rigidbody>().isKinematic = true;
-            gameObject.transform.position = transform.position + Vector3.Dot((gameObject.transform.position- transform.position), transform.TransformDirection(Vector3.up)) * Vector3.Normalize(transform.TransformDirection(Vector3.up));
-            captured = true;
-
+            parentObject = gameObject.transform.parent.gameObject;
+            Debug.Log(gameObject.name);
+            Debug.Log(parentObject.name);
+            if (parentObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Pairing)
+            {
+                nextObject = parentObject.transform.Find("LinearDrive").gameObject;
+                nextObject.transform.position = gameObject.transform.position;
+                nextObject.transform.Find("Handle").position = gameObject.transform.position;
+                // nextObject.transform.rotation = gameObject.transform.rotation;
+                gameObject.SetActive(false);
+                nextObject.SetActive(true);
+                //gameObject.GetComponent<Rigidbody>().useGravity = false;
+                //gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                //gameObject.transform.position = transform.position + Vector3.Dot((gameObject.transform.position- transform.position), transform.TransformDirection(Vector3.up)) * Vector3.Normalize(transform.TransformDirection(Vector3.up));
+                parentObject.GetComponent<ComponentState>().assemblePhase = ComponentState.AssemblePhase.Insertion;
+            }
         }
         //else
         //{
