@@ -36,7 +36,7 @@ public class CoAxial : MonoBehaviour
                 nextObject.transform.position = gameObject.transform.position;
                 nextObject.transform.Find("Handle").position = gameObject.transform.position;
                 // nextObject.transform.rotation = gameObject.transform.rotation;
-                gameObject.SetActive(false);
+                Destroy(gameObject);
                 nextObject.SetActive(true);
                 //gameObject.GetComponent<Rigidbody>().useGravity = false;
                 //gameObject.GetComponent<Rigidbody>().isKinematic = true;
