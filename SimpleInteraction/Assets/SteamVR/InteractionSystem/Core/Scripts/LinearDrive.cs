@@ -28,10 +28,10 @@ namespace Valve.VR.InteractionSystem
         protected float[] mappingChangeSamples;
         protected float prevMapping = 0.0f;
 
-        protected Vector3 preDirection;
-        protected Vector3 currDirection;
+        protected float preDirection;
+        protected float currDirection;
         protected float rotateAngle;
-        protected Vector3 rotateAxis;
+        //protected Vector3 rotateAxis;
 
         protected float mappingChangeRate;
         protected int sampleCount = 0;
@@ -59,7 +59,7 @@ namespace Valve.VR.InteractionSystem
 
            linearMapping.value = CalculateLinearMapping(transform);
            initialMappingOffset = linearMapping.value;
-           currDirection = transform.forward;
+           currDirection = transform.localEulerAngles.z;
 
 			if (initReposition)
 			{
@@ -118,8 +118,9 @@ namespace Valve.VR.InteractionSystem
 			linearMapping.value = Mathf.Clamp01( initialMappingOffset + CalculateLinearMapping( updateTransform ) );
 
             preDirection = currDirection;
-            currDirection = updateTransform.forward;
-            Quaternion.FromToRotation(preDirection, currDirection).ToAngleAxis(out rotateAngle,out rotateAxis);
+            currDirection = updateTransform.localEulerAngles.z;
+            rotateAngle = currDirection - preDirection;
+            //Qaternion.FromToRotation(preDirection, currDirection).ToAngleAxis(out rotateAngle,out rotateAxis);
 
             mappingChangeSamples[sampleCount % mappingChangeSamples.Length] = ( 1.0f / Time.deltaTime ) * ( linearMapping.value - prevMapping );
 			sampleCount++;
@@ -127,7 +128,7 @@ namespace Valve.VR.InteractionSystem
 			if ( repositionGameObject )
 			{
 				transform.position = Vector3.Lerp( startPosition.position, endPosition.position, linearMapping.value);
-                transform.RotateAround(transform.position, rotateAxis, rotateAngle);
+                transform.Rotate(-rotateAngle,0f, 0f, Space.Self);
 			}
 		}
 

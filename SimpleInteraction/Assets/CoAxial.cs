@@ -8,12 +8,20 @@ public class CoAxial : MonoBehaviour
     // Start is called before the first frame update
     //  public Transform nextObject;
     public float Tolerance;
-    public Material _material;
+    //   public Material _material;
+    public Vector3 RayCastDirection;
+    public bool RayCastManuel=false;
+    public Transform startPosition;
+    public Transform endPosition;
+    public float RayCastDistance = Mathf.Infinity;
     private bool isDone = false;
 
     void Start()
     {
-
+        if (!RayCastManuel)
+        {
+            RayCastDirection = endPosition.position - startPosition.position;
+        }
     }
 
     // Update is called once per frame
@@ -28,7 +36,7 @@ public class CoAxial : MonoBehaviour
         GameObject nextObject;
         if (!isDone)
         {
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up), out hit, Mathf.Infinity, layerMask))
+            if (Physics.Raycast(transform.position, RayCastDirection, out hit, RayCastDistance, layerMask))
             {
                 Debug.Log("Did Hit");
                 currObject = hit.transform.gameObject;
@@ -51,8 +59,8 @@ public class CoAxial : MonoBehaviour
                 if (parentObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Insertion)
                 {
                     Debug.Log("Inserted");
-                    Debug.Log((currObject.transform.position - transform.position).magnitude);
-                    if ((currObject.transform.position - transform.position).magnitude <= Tolerance)
+                    Debug.Log((currObject.transform.eulerAngles - transform.eulerAngles).magnitude);
+                    if ((currObject.transform.position - transform.position).magnitude <= Tolerance && (currObject.transform.eulerAngles - transform.eulerAngles).magnitude <= Tolerance)
                     {
                         Destroy(currObject);
                         transform.Find("Reference").gameObject.SetActive(false);
