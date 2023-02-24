@@ -20,6 +20,7 @@ namespace Valve.VR.InteractionSystem
 		public bool repositionGameObject = true;
 		public bool maintainMomemntum = true;
 		public float momemtumDampenRate = 5.0f;
+        public float mappingFactor = 0.9f;
 
         protected Hand.AttachmentFlags attachmentFlags = Hand.AttachmentFlags.DetachFromOtherHand;
 
@@ -119,7 +120,7 @@ namespace Valve.VR.InteractionSystem
 
             preDirection = currDirection;
             currDirection = updateTransform.localEulerAngles.z;
-            rotateAngle = currDirection - preDirection;
+            rotateAngle = mappingFactor*(currDirection - preDirection);
             //Qaternion.FromToRotation(preDirection, currDirection).ToAngleAxis(out rotateAngle,out rotateAxis);
 
             mappingChangeSamples[sampleCount % mappingChangeSamples.Length] = ( 1.0f / Time.deltaTime ) * ( linearMapping.value - prevMapping );
