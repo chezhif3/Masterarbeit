@@ -23,8 +23,6 @@ public class CoAxial : MonoBehaviour
         {
             RayCastDirection = endPosition.position - startPosition.position;
         }
-        Debug.Log(transform.parent.Find("Mesh").GetChild(0).localPosition);
-        Debug.Log(transform.parent.Find("Mesh").GetChild(1).localPosition);
     }
 
     // Update is called once per frame
