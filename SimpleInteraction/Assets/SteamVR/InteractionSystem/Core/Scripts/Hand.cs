@@ -1163,6 +1163,7 @@ namespace Valve.VR.InteractionSystem
                             objectT.rotation = oldItemRot;
 
                             targetHandPosition = objectT.TransformPoint(localSkelePos);
+                            //targetHandPosition = TargetItemPosition(currentAttachedObjectInfo.Value);
                             targetHandRotation = objectT.rotation * localSkeleRot;
                         }
 
@@ -1175,6 +1176,9 @@ namespace Valve.VR.InteractionSystem
                             mainRenderModel.SetHandPosition(targetHandPosition);
                         if (hoverhighlightRenderModel != null)
                             hoverhighlightRenderModel.SetHandPosition(targetHandPosition);
+
+
+
                     }
                 }
             }

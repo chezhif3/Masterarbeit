@@ -15,6 +15,7 @@ public class CoAxial : MonoBehaviour
     public Transform startPosition;
     public Transform endPosition;
     public float RayCastDistance = Mathf.Infinity;
+    public GameObject prefab;
     private bool isDone = false;
 
     void Start()
@@ -34,40 +35,44 @@ public class CoAxial : MonoBehaviour
         RaycastHit hit;
         GameObject currObject;
         GameObject parentObject;
+        Vector3 currPosition;
+
         GameObject nextObject;
-        //float referenceAngle;
-        //float isAngle;
+
 
         if (!isDone)
         {
             if (Physics.Raycast(transform.position, RayCastDirection, out hit, RayCastDistance, layerMask))
             {
-                Debug.Log("Did Hit");
+                //Debug.Log("Did Hit");
                 currObject = hit.transform.gameObject;
                 parentObject = currObject.transform.parent.gameObject;
-                Debug.Log(currObject.name);
-                Debug.Log(parentObject.name);
+                //Debug.Log(currObject.name);
+               // Debug.Log(parentObject.name);
                 if (parentObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Pairing)
                 {
-                    nextObject = parentObject.transform.Find("LinearDrive").gameObject;
-                    nextObject.transform.position = currObject.transform.position;
-                    // nextObject.transform.Find("Handle").position = currObject.transform.position;
-                    // nextObject.transform.rotation = gameObject.transform.rotation;
-                    Destroy(currObject);
-                    nextObject.SetActive(true);
-                    //gameObject.GetComponent<Rigidbody>().useGravity = false;
-                    //gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                    //gameObject.transform.position = transform.position + Vector3.Dot((gameObject.transform.position- transform.position), transform.TransformDirection(Vector3.up)) * Vector3.Normalize(transform.TransformDirection(Vector3.up));
-                    parentObject.GetComponent<ComponentState>().assemblePhase = ComponentState.AssemblePhase.Insertion;
+                    currPosition = currObject.transform.position;
+                    Destroy(parentObject);
+                    nextObject = prefab;
+                    nextObject.GetComponent<ComponentState>().SetStartEnd(startPosition, endPosition);
+                    Debug.Log(nextObject.GetComponent<ComponentState>().assemblePhase);
+                    nextObject.GetComponent<ComponentState>().assemblePhase = ComponentState.AssemblePhase.Insertion;
+                    Debug.Log(nextObject.GetComponent<ComponentState>().assemblePhase);
+                    Debug.Log(prefab.GetComponent<ComponentState>().assemblePhase);
+                    Instantiate(nextObject , currPosition, Quaternion.identity);
                 }
                 if (parentObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Insertion)
                 {
-                    Debug.Log("Inserted");
-                    currObject = parentObject.transform.Find("LinearDrive").gameObject;
-                    Debug.Log(currObject.transform.localEulerAngles.x );
-                    Debug.Log(transform.eulerAngles.x);
-                    Debug.Log((currObject.transform.eulerAngles.x - transform.eulerAngles.x));
-                    //referenceAngle = currObject.transform.rotation.ToAngleAxie(out isAngle, out );
+                   // Debug.Log("Inserted");
+                    currObject =parentObject.transform.Find("LinearDrive").gameObject;
+                    if((currObject.transform.position - startPosition.position).magnitude > 0.4)
+                    {
+                        currPosition = currObject.transform.position;
+                        Destroy(parentObject);
+                        nextObject = prefab;
+                        nextObject.GetComponent<ComponentState>().assemblePhase = ComponentState.AssemblePhase.Pairing;
+                        Instantiate(nextObject, currPosition, Quaternion.identity);
+                    }
                     if ((currObject.transform.position - transform.position).magnitude <= PostionTolerance &&( ((currObject.transform.eulerAngles.x- transform.eulerAngles.x)%90 <= AngleTolerance )| (currObject.transform.eulerAngles.x - transform.eulerAngles.x)<= AngleTolerance ))
                     {
                         Destroy(currObject);
