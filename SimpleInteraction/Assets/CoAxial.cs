@@ -16,13 +16,17 @@ public class CoAxial : MonoBehaviour
     public Transform endPosition;
     public float RayCastDistance = Mathf.Infinity;
     public GameObject prefab;
+    public bool inverseRaydir;
     private bool isDone = false;
 
     void Start()
     {
         if (!RayCastManuel)
         {
-            RayCastDirection = endPosition.position - startPosition.position;
+            if(!inverseRaydir)
+            { RayCastDirection = endPosition.position - startPosition.position; }
+            else
+            { RayCastDirection = startPosition.position - endPosition.position; }
         }
     }
 
@@ -65,7 +69,8 @@ public class CoAxial : MonoBehaviour
                 {
                    // Debug.Log("Inserted");
                     currObject =parentObject.transform.Find("LinearDrive").gameObject;
-                    if((currObject.transform.position - startPosition.position).magnitude > 0.4)
+                    nextObject = prefab;
+                    if ((currObject.transform.position - startPosition.position).magnitude > 0.4)
                     {
                         currPosition = currObject.transform.position;
                         Destroy(parentObject);
@@ -76,8 +81,10 @@ public class CoAxial : MonoBehaviour
                     if ((currObject.transform.position - transform.position).magnitude <= PostionTolerance &&( ((currObject.transform.eulerAngles.x- transform.eulerAngles.x)%90 <= AngleTolerance )| (currObject.transform.eulerAngles.x - transform.eulerAngles.x)<= AngleTolerance ))
                     {
                         Destroy(currObject);
+                        GameObject refOb = transform.Find("Reference").gameObject;
+                        Instantiate(nextObject, refOb.transform.position, refOb.transform.rotation,transform);
                         transform.Find("Reference").gameObject.SetActive(false);
-                        transform.Find("Solution").gameObject.SetActive(true);
+                       // transform.Find("Solution").gameObject.SetActive(true);
                         isDone = true;
                     }
                 }
