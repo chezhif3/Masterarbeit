@@ -46,7 +46,7 @@ public class CoAxial : MonoBehaviour
 
         if (!isDone)
         {
-            if (Physics.Raycast(transform.position, RayCastDirection, out hit, RayCastDistance, layerMask))
+            if (Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask))
             {
                 //Debug.Log("Did Hit");
                 currObject = hit.transform.gameObject;
