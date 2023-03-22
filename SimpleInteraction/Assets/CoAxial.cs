@@ -32,55 +32,67 @@ public class CoAxial : MonoBehaviour
 
     // Update is called once per frame
 
-    void Update()
+    void FixedUpdate()
     {
-        int layerMask = (1 << 0) | (1 << 3);
+        int layerMask1 =  1 << 6;
+        int layerMask2 = 1 << 7;
 
         RaycastHit hit;
         GameObject currObject;
         GameObject parentObject;
         Vector3 currPosition;
+        
 
         GameObject nextObject;
 
 
         if (!isDone)
         {
-            if (Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask))
+            Debug.Log(startPosition.position);
+            Debug.DrawRay(startPosition.position, RayCastDirection, Color.yellow);
+            if (Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask1)&& Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask2))
             {
-                //Debug.Log("Did Hit");
+                Debug.Log("Did Hit");
                 currObject = hit.transform.gameObject;
                 parentObject = currObject.transform.parent.gameObject;
-                //Debug.Log(currObject.name);
-               // Debug.Log(parentObject.name);
+                Debug.Log(currObject.name);
+                Debug.Log(parentObject.name);
                 if (parentObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Pairing)
                 {
                     currPosition = currObject.transform.position;
+                    Debug.Log(startPosition.position);
+                    Debug.Log("Destroy:" + parentObject.name);
                     Destroy(parentObject);
                     nextObject = prefab;
                     nextObject.GetComponent<ComponentState>().SetStartEnd(startPosition, endPosition);
                     Debug.Log(nextObject.GetComponent<ComponentState>().assemblePhase);
+                    Debug.Log(startPosition.position);
                     nextObject.GetComponent<ComponentState>().assemblePhase = ComponentState.AssemblePhase.Insertion;
+                    GameObject refOb = transform.Find("Reference").gameObject;
                     Debug.Log(nextObject.GetComponent<ComponentState>().assemblePhase);
+                    Debug.Log(startPosition.position);
                     Debug.Log(prefab.GetComponent<ComponentState>().assemblePhase);
-                    Instantiate(nextObject , currPosition, Quaternion.identity);
+                    Debug.Log("spwan:" + nextObject.name);
+                    Instantiate(nextObject , currPosition, refOb.transform.rotation, transform);
+                    Debug.Log(startPosition.position);
                 }
                 if (parentObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Insertion)
                 {
-                   // Debug.Log("Inserted");
+                    Debug.Log("Inserted");
+                    Debug.Log(startPosition.position);
                     currObject =parentObject.transform.Find("LinearDrive").gameObject;
                     nextObject = prefab;
                     if ((currObject.transform.position - startPosition.position).magnitude > 0.4)
                     {
                         currPosition = currObject.transform.position;
-                        Destroy(parentObject);
+                       // Destroy(parentObject);
                         nextObject = prefab;
                         nextObject.GetComponent<ComponentState>().assemblePhase = ComponentState.AssemblePhase.Pairing;
                         Instantiate(nextObject, currPosition, Quaternion.identity);
                     }
                     if ((currObject.transform.position - transform.position).magnitude <= PostionTolerance &&( ((currObject.transform.eulerAngles.x- transform.eulerAngles.x)%90 <= AngleTolerance )| (currObject.transform.eulerAngles.x - transform.eulerAngles.x)<= AngleTolerance ))
                     {
-                        Destroy(currObject);
+                       // Destroy(currObject);
                         GameObject refOb = transform.Find("Reference").gameObject;
                         Instantiate(nextObject, refOb.transform.position, refOb.transform.rotation,transform);
                         transform.Find("Reference").gameObject.SetActive(false);
@@ -94,7 +106,7 @@ public class CoAxial : MonoBehaviour
             //    Debug.Log("Did not Hit");
             //}
 
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * 10, Color.yellow);
+            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * 10, Color.yellow);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Valve.VR.InteractionSystem
 
            linearMapping.value = CalculateLinearMapping(transform);
            initialMappingOffset = linearMapping.value;
-           currDirection = transform.localEulerAngles.z;
+           currDirection = transform.localEulerAngles.x;
 
 			if (initReposition)
 			{
@@ -129,7 +129,7 @@ namespace Valve.VR.InteractionSystem
 			if ( repositionGameObject )
 			{
 				transform.position = Vector3.Lerp( startPosition.position, endPosition.position, linearMapping.value);
-                transform.Rotate(-rotateAngle,0f, 0f, Space.Self);
+                transform.Rotate(0f, 0f,-rotateAngle,Space.Self);
 			}
 		}
 
