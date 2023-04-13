@@ -42,12 +42,15 @@ namespace Valve.VR.InteractionSystem
 
         protected virtual void Awake()
         {
+			startPosition = this.transform.Find("Start");
+			endPosition = this.transform.Find("End");
             mappingChangeSamples = new float[numMappingChangeSamples];
             interactable = GetComponent<Interactable>();
         }
 
         protected virtual void Start()
 		{
+		//	endPosition = transfrom.Find("End");
 			if ( linearMapping == null )
 			{
 				linearMapping = GetComponent<LinearMapping>();
@@ -153,11 +156,25 @@ namespace Valve.VR.InteractionSystem
 				mappingChangeRate = Mathf.Lerp( mappingChangeRate, 0.0f, momemtumDampenRate * Time.deltaTime );
 				linearMapping.value = Mathf.Clamp01( linearMapping.value + ( mappingChangeRate * Time.deltaTime ) );
 
-				if ( initReposition )
+			}
+
+			if ( initReposition )
+			{
+				// Debug.Log("LinearUpdating");
+				if(startPosition.position== null)
+				{
+					Debug.Log("missingStart");
+					Debug.Log(transform.parent.gameObject.name);
+					//transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification);
+				}
+				if(transform != null)
 				{
 					transform.position = Vector3.Lerp( startPosition.position, endPosition.position, linearMapping.value );
 				}
+				transform.position = Vector3.Lerp( startPosition.position, endPosition.position, linearMapping.value );
 			}
 		}
+
+
 	}
 }

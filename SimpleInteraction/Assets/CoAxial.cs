@@ -17,7 +17,9 @@ public class CoAxial : MonoBehaviour
     public float RayCastDistance = Mathf.Infinity;
     public GameObject prefab;
     public bool inverseRaydir;
-    private bool isDone = false;
+
+
+    public bool isDone = false;
 
     void Start()
     {
@@ -32,7 +34,9 @@ public class CoAxial : MonoBehaviour
 
     // Update is called once per frame
 
-    void FixedUpdate()
+    // private int temp=0;
+
+    void Update()
     {
         int layerMask1 =  1 << 6;
         int layerMask2 = 1 << 7;
@@ -43,62 +47,75 @@ public class CoAxial : MonoBehaviour
         Vector3 currPosition;
         
 
-        GameObject nextObject;
+        GameObject capturedObject;
 
 
         if (!isDone)
         {
-            Debug.Log(startPosition.position);
-            Debug.DrawRay(startPosition.position, RayCastDirection, Color.yellow);
+            // isDone = true;
+            // temp = temp+1;
+            // Debug.Log(temp);
+            // Debug.Log(isDone);
+            // Debug.Log(startPosition.position);
+            // Debug.DrawRay(startPosition.position, RayCastDirection, Color.yellow);
             if (Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask1)&& Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask2))
             {
                 Debug.Log("Did Hit");
-                currObject = hit.transform.gameObject;
-                parentObject = currObject.transform.parent.gameObject;
-                Debug.Log(currObject.name);
-                Debug.Log(parentObject.name);
-                if (parentObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Pairing)
+                currObject = hit.transform.parent.gameObject;
+                //parentObject = transform.parent.parent.gameObject;
+                // Debug.Log( hit.transform.parent.gameObject.name);
+                Debug.Log(transform.parent.parent.parent.parent.gameObject.name);
+                transform.parent.parent.parent.parent.gameObject.GetComponent<ComponentState>().capturedObject = hit.transform.parent.gameObject;
+                if (hit.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Pairing)
                 {
-                    currPosition = currObject.transform.position;
-                    Debug.Log(startPosition.position);
-                    Debug.Log("Destroy:" + parentObject.name);
-                    Destroy(parentObject);
-                    nextObject = prefab;
-                    nextObject.GetComponent<ComponentState>().SetStartEnd(startPosition, endPosition);
-                    Debug.Log(nextObject.GetComponent<ComponentState>().assemblePhase);
-                    Debug.Log(startPosition.position);
-                    nextObject.GetComponent<ComponentState>().assemblePhase = ComponentState.AssemblePhase.Insertion;
-                    GameObject refOb = transform.Find("Reference").gameObject;
-                    Debug.Log(nextObject.GetComponent<ComponentState>().assemblePhase);
-                    Debug.Log(startPosition.position);
-                    Debug.Log(prefab.GetComponent<ComponentState>().assemblePhase);
-                    Debug.Log("spwan:" + nextObject.name);
-                    Instantiate(nextObject , currPosition, refOb.transform.rotation, transform);
-                    Debug.Log(startPosition.position);
+                    // currPosition = currObject.transform.position;
+                    // Debug.Log(startPosition.position);
+                    //Debug.Log("Destroy:" + parentObject.name);
+                    //Destroy(parentObject);
+                    //currObject.transform.Find("Collider")
+                    //currObject.transform.parent = transform;
+                    Debug.Log("ChangingPhase");
+                    currObject.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Insertion);
+                    currObject.transform.Find("LinearDrive(Clone)").Find("Start").position = transform.Find("Start").position;
+                    currObject.transform.Find("LinearDrive(Clone)").Find("Start").SetParent(transform.Find("Start"));
+                    currObject.transform.Find("LinearDrive(Clone)").Find("End").position = transform.Find("End").position;
+                    currObject.transform.Find("LinearDrive(Clone)").Find("End").SetParent(transform.Find("End"));
+                    //currObject.GetComponent<ComponentState>().SetStartEnd(transform.Find("Start"), transform.Find("End"));
+                    // nextObject = prefab;
+                    // nextObject.GetComponent<ComponentState>().SetStartEnd(startPosition, endPosition);
+                    // Debug.Log(nextObject.GetComponent<ComponentState>().assemblePhase);
+                    // Debug.Log(startPosition.position);
+                    // GameObject refOb = transform.Find("Reference").gameObject;
+                    // Debug.Log(nextObject.GetComponent<ComponentState>().assemblePhase);
+                    // Debug.Log(startPosition.position);
+                    // Debug.Log(prefab.GetComponent<ComponentState>().assemblePhase);
+                    // Debug.Log("spwan:" + nextObject.name);
+                    // Instantiate(nextObject , currPosition, refOb.transform.rotation, transform);
+                    // Debug.Log(startPosition.position);
                 }
-                if (parentObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Insertion)
+                else if (hit.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Insertion)
                 {
-                    Debug.Log("Inserted");
-                    Debug.Log(startPosition.position);
-                    currObject =parentObject.transform.Find("LinearDrive").gameObject;
-                    nextObject = prefab;
-                    if ((currObject.transform.position - startPosition.position).magnitude > 0.4)
-                    {
-                        currPosition = currObject.transform.position;
-                       // Destroy(parentObject);
-                        nextObject = prefab;
-                        nextObject.GetComponent<ComponentState>().assemblePhase = ComponentState.AssemblePhase.Pairing;
-                        Instantiate(nextObject, currPosition, Quaternion.identity);
-                    }
-                    if ((currObject.transform.position - transform.position).magnitude <= PostionTolerance &&( ((currObject.transform.eulerAngles.x- transform.eulerAngles.x)%90 <= AngleTolerance )| (currObject.transform.eulerAngles.x - transform.eulerAngles.x)<= AngleTolerance ))
-                    {
-                       // Destroy(currObject);
-                        GameObject refOb = transform.Find("Reference").gameObject;
-                        Instantiate(nextObject, refOb.transform.position, refOb.transform.rotation,transform);
-                        transform.Find("Reference").gameObject.SetActive(false);
-                       // transform.Find("Solution").gameObject.SetActive(true);
-                        isDone = true;
-                    }
+                    // Debug.Log("Inserted");
+                    // Debug.Log(startPosition.position);
+                    // currObject =parentObject.transform.Find("LinearDrive").gameObject;
+                    // nextObject = prefab;
+                    // if ((hit.transform.parent.gameObject.name.transform.position - startPosition.position).magnitude > 0.4)
+                    // {
+                    //     currPosition = currObject.transform.position;
+                    //    // Destroy(parentObject);
+                    //     nextObject = prefab;
+                    //     nextObject.GetComponent<ComponentState>().assemblePhase = ComponentState.AssemblePhase.Pairing;
+                    //     Instantiate(nextObject, currPosition, Quaternion.identity);
+                    // }
+                    // if ((currObject.transform.position - transform.position).magnitude <= PostionTolerance &&( ((currObject.transform.eulerAngles.x- transform.eulerAngles.x)%90 <= AngleTolerance )| (currObject.transform.eulerAngles.x - transform.eulerAngles.x)<= AngleTolerance ))
+                    // {
+                    //    // Destroy(currObject);
+                    //     GameObject refOb = transform.Find("Reference").gameObject;
+                    //     Instantiate(nextObject, refOb.transform.position, refOb.transform.rotation,transform);
+                    //     transform.Find("Reference").gameObject.SetActive(false);
+                    //    // transform.Find("Solution").gameObject.SetActive(true);
+                    //     isDone = true;
+                    // }
                 }
             }
             //else

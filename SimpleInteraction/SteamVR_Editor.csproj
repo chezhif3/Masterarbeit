@@ -287,28 +287,28 @@
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="log4netPlastic">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Library/PackageCache/com.unity.collab-proxy@1.15.7/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Library/PackageCache/com.unity.collab-proxy@1.15.7/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
  </Reference>
  <Reference Include="Valve.Newtonsoft.Json">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="SGCoreCs">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Assets/SenseGlove/Plugins/SGCoreCs.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Assets/SenseGlove/Plugins/SGCoreCs.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Plastic.Newtonsoft.Json">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Library/PackageCache/com.unity.collab-proxy@1.15.7/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Library/PackageCache/com.unity.collab-proxy@1.15.7/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Plastic.Antlr3.Runtime">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Library/PackageCache/com.unity.collab-proxy@1.15.7/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Library/PackageCache/com.unity.collab-proxy@1.15.7/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="unityplastic">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Library/PackageCache/com.unity.collab-proxy@1.15.7/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Library/PackageCache/com.unity.collab-proxy@1.15.7/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -659,25 +659,25 @@
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XPath.XDocument.dll</HintPath>
  </Reference>
  <Reference Include="Unity.XR.OpenVR">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Library/ScriptAssemblies/Unity.XR.OpenVR.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Library/ScriptAssemblies/Unity.XR.OpenVR.dll</HintPath>
  </Reference>
  <Reference Include="Unity.XR.Management.Editor">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Library/ScriptAssemblies/Unity.XR.Management.Editor.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Library/ScriptAssemblies/Unity.XR.Management.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.XR.Management">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Library/ScriptAssemblies/Unity.XR.Management.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Library/ScriptAssemblies/Unity.XR.Management.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.TestRunner">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.TestRunner">
- <HintPath>M:/privat/test/Update/SimpleInteraction/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+ <HintPath>D:/MA/Masterarbeit/SimpleInteraction/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
