@@ -21,12 +21,13 @@ public class CaptureOn : MonoBehaviour
     {
         Debug.Log("leaveWorkstation:");
         Debug.Log(other.gameObject.transform.parent.name);
-        if(other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Pairing )
+        if(other.gameObject.transform.parent.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Pairing )
         {
             if(other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject!=null)
                 {
-                    other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification);
-                }
+                other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification);
+                Destroy(other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject);
+            }
             other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification); 
         }
 

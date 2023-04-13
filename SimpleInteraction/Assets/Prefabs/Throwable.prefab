@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 7891866416647517341}
   - component: {fileID: 7891866416647517340}
   - component: {fileID: 7891866416647517339}
-  - component: {fileID: 7891866416647517330}
+  - component: {fileID: 621725095924580883}
   m_Layer: 8
   m_Name: Throwable
   m_TagString: Untagged
@@ -333,7 +333,7 @@ MonoBehaviour:
   previewPoseSelection: 0
   blendingBehaviours: []
   scale: 1
---- !u!135 &7891866416647517330
+--- !u!135 &621725095924580883
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -341,8 +341,8 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7891866416647517337}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.05
+  m_Radius: 0.025
   m_Center: {x: 0, y: 0, z: 0}

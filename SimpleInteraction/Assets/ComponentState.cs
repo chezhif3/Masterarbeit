@@ -74,6 +74,8 @@ public class ComponentState : MonoBehaviour
         }
         colliderMeshPrefab = transform.Find("Colliders").gameObject;
         socketPrefab = transform.Find("Sockets").gameObject;
+        Debug.Log("spwan mesh update");
+        Debug.Log(colliderMeshPrefab.name);
         Instantiate(colliderMeshPrefab, transform.Find("Throwable(Clone)").Find("Colliders"));
         if (socketPrefab != null)
         {
@@ -87,6 +89,7 @@ public class ComponentState : MonoBehaviour
             for (int i = 0; i < currOb.transform.childCount; i++)
             {
                 currOb.transform.GetChild(i).gameObject.SetActive(true);
+                Debug.Log(transform.Find("Throwable(Clone)").Find("Colliders").GetChild(i).gameObject.name);
             }
         }
         else
@@ -131,6 +134,7 @@ public class ComponentState : MonoBehaviour
         }
         Debug.Log(name);
         Debug.Log("ColliderUpdated");
+        Debug.Log(transform.Find("Throwable(Clone)").Find("Colliders").GetChild(0).gameObject.name);
 
     }
 
@@ -237,14 +241,14 @@ public class ComponentState : MonoBehaviour
             Debug.Log("spawn linear drive");
             Instantiate(linearDrive,transform);
         }
-        Debug.Log("spawn mesh");
-        Instantiate(colliderMeshPrefab, transform.Find("Throwable(Clone)").Find("Colliders"));
-        if (socketPrefab != null)
-        {
-            var newOG = Instantiate(socketPrefab, transform.Find("Throwable(Clone)").Find("Sockets"));
-           // newOG.SetActive(false);
-        }
-        Instantiate(colliderMeshPrefab, transform.Find("LinearDrive(Clone)").Find("Colliders"));
+    //    Debug.Log("spawn mesh");
+    //    Instantiate(colliderMeshPrefab, transform.Find("Throwable(Clone)").Find("Colliders"));
+    //    if (socketPrefab != null)
+    //    {
+    //        var newOG = Instantiate(socketPrefab, transform.Find("Throwable(Clone)").Find("Sockets"));
+    //        newOG.SetActive(false);
+    //    }
+    //    Instantiate(colliderMeshPrefab, transform.Find("LinearDrive(Clone)").Find("Colliders"));
     }
 
 }

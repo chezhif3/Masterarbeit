@@ -138,6 +138,7 @@ MonoBehaviour:
   RayCastDistance: Infinity
   prefab: {fileID: 0}
   inverseRaydir: 0
+  isDone: 0
 --- !u!1 &254612637952853985
 GameObject:
   m_ObjectHideFlags: 0

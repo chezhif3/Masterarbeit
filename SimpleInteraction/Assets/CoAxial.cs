@@ -50,6 +50,7 @@ public class CoAxial : MonoBehaviour
         GameObject capturedObject;
 
 
+
         if (!isDone)
         {
             // isDone = true;
@@ -59,8 +60,10 @@ public class CoAxial : MonoBehaviour
             // Debug.Log(startPosition.position);
             // Debug.DrawRay(startPosition.position, RayCastDirection, Color.yellow);
             if (Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask1)&& Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask2))
+            //if (Physics.Raycast(startPosition.position, RayCastDirection,out hit, RayCastDistance,layerMask1 ) )
             {
                 Debug.Log("Did Hit");
+                Debug.Log(hit.transform.gameObject.name);
                 currObject = hit.transform.parent.gameObject;
                 //parentObject = transform.parent.parent.gameObject;
                 // Debug.Log( hit.transform.parent.gameObject.name);
@@ -118,10 +121,10 @@ public class CoAxial : MonoBehaviour
                     // }
                 }
             }
-            //else
-            //{
-            //    Debug.Log("Did not Hit");
-            //}
+            else
+            {
+                Debug.Log("Did not Hit");
+            }
 
             //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * 10, Color.yellow);
         }
