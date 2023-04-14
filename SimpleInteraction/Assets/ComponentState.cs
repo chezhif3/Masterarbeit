@@ -17,6 +17,9 @@ public class ComponentState : MonoBehaviour
     public GameObject throwable;
     public GameObject linearDrive;
     public GameObject capturedObject;
+    public GameObject Spawner;
+    public Transform spawnTransform;
+    public int Index;
 
     public bool isPairing;
 
@@ -241,6 +244,7 @@ public class ComponentState : MonoBehaviour
             Debug.Log("spawn linear drive");
             Instantiate(linearDrive,transform);
         }
+
     //    Debug.Log("spawn mesh");
     //    Instantiate(colliderMeshPrefab, transform.Find("Throwable(Clone)").Find("Colliders"));
     //    if (socketPrefab != null)
@@ -251,5 +255,10 @@ public class ComponentState : MonoBehaviour
     //    Instantiate(colliderMeshPrefab, transform.Find("LinearDrive(Clone)").Find("Colliders"));
     }
 
+    void OnDestroy()
+    {
+        Debug.Log("Respawn");
+        Spawner.SendMessage("spawn");
+    }
 }
 
