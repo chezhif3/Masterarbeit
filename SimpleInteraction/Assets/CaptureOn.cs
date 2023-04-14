@@ -13,6 +13,10 @@ public class CaptureOn : MonoBehaviour
     private ListNode head;
     private ListNode curr;
 
+
+    private int countMaxColliders;
+    private int countCurrColliders=0;
+
     void Start()
     {
         head = new ListNode();
@@ -33,21 +37,40 @@ public class CaptureOn : MonoBehaviour
         Debug.Log(other.gameObject.transform.parent.name);
         // if(!other.gameObject.transform.parent.parent.parent.gameObject.GetComponent<Valve.VR.InteractionSystem.Throwable>().attached)
         // { 
-        if(query != -1)
+        if (countCurrColliders >= 2)
         {
-            if(other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Identification )
-            {
-                other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Pairing); 
-            }
+            Destroy(other.gameObject.transform.parent.gameObject);
         }
         else
         {
-            Destroy(other.gameObject.transform.parent.gameObject);
-            GameObject targetObject= GameObject.Find("Profiling");
-            object[] parameters = new object[] {currInt,0,Time.time};
-            targetObject.SendMessage("recordAttempt",parameters);
-            targetObject.SendMessage("printRecord");
+            if (query != -1)
+            {
+                if (other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Identification)
+                {
+                    other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Pairing);
+                    countCurrColliders++;
+                }
+                else
+                {
+                    Destroy(other.gameObject.transform.parent.gameObject);
+                    GameObject targetObject = GameObject.Find("Profiling");
+                    switch (countMaxColliders)
+                    {
+                        case 0:
+                            object[] parameters = new object[] { currInt, 0, Time.time };
+                            targetObject.SendMessage("recordAttempt", parameters);
+                            targetObject.SendMessage("printRecord");
+                            break;
+                        case 1:
+                            object[] parameters = new object[] { currInt, 1, Time.time };
+                            targetObject.SendMessage("recordAttempt", parameters);
+                            targetObject.SendMessage("printRecord");
+
+                    }
+                }
+            }
         }
+        
 
         // }
     }
@@ -62,8 +85,15 @@ public class CaptureOn : MonoBehaviour
                 {
                 other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification);
                 Destroy(other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject);
+                countCurrColliders--;
                 }
-            other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification); 
+            other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification);
+            countCurrColliders--;
+        }
+
+    voit FixedUpdate()
+        {
+
         }
 
         // if(other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Insertion )

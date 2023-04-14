@@ -12,6 +12,7 @@ public class Record : MonoBehaviour
         array.Add(new object[] {attempt[0], attempt[1], attempt[2]});
     }
 
+
     // Update is called once per frame
 
     void printRecord()
