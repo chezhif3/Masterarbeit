@@ -217,13 +217,15 @@ namespace Valve.VR.InteractionSystem
 
             if (releaseVelocityStyle != ReleaseStyle.NoChange)
             {
-                    float scaleFactor = 1.0f;
+                //attention
+                    float scaleFactor =0f;
                     if (scaleReleaseVelocityThreshold > 0)
                     {
                         scaleFactor = Mathf.Clamp01(scaleReleaseVelocityCurve.Evaluate(velocity.magnitude / scaleReleaseVelocityThreshold));
                     }
 
                     velocity *= (scaleFactor * scaleReleaseVelocity);
+                    angularVelocity = Vector3.zero;
             }
         }
 

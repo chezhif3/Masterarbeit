@@ -815,7 +815,7 @@ MonoBehaviour:
   linearDrive: {fileID: 8058736311414183651, guid: a697700e02b97384c9ac3ae405c22f28,
     type: 3}
   capturedObject: {fileID: 0}
-  Spawner: {fileID: 0}
+  Spawner: {fileID: 7800758175850613420, guid: 1daf9b5b434be0e4faa2416fb6236ad6, type: 3}
   spawnTransform: {fileID: 0}
   Index: 3
   isPairing: 0
