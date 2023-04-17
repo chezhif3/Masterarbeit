@@ -6,9 +6,15 @@ public class Spawner : MonoBehaviour
 {
     public GameObject objectToSpawn;
 
+    void Start()
+    {
+        spawn();
+    }
+
     private void spawn()
     {
-        Instantiate(objectToSpawn,transform.position,Quaternion.identity);
+        Debug.Log("Spawn: "+objectToSpawn.name);
+        Instantiate(objectToSpawn,transform.position,transform.rotation);
     }
 
 

@@ -15,12 +15,12 @@ public class CaptureOn : MonoBehaviour
 
 
     private int countMaxColliders;
-    private int countCurrColliders=0;
+    public int countCurrColliders=0;
 
     void Start()
     {
         head = new ListNode();
-        head.value = new int[] {1,2};
+        head.value = new int[] {0,5};
         curr = head;
     }
 
@@ -35,6 +35,7 @@ public class CaptureOn : MonoBehaviour
         int query = System.Array.IndexOf(curr.value, other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().Index);
         Debug.Log("enterWorkstation:");
         Debug.Log(other.gameObject.transform.parent.name);
+        Debug.Log("Index: "+query);
         // if(!other.gameObject.transform.parent.parent.parent.gameObject.GetComponent<Valve.VR.InteractionSystem.Throwable>().attached)
         // { 
         if (countCurrColliders >= 2)
@@ -50,25 +51,28 @@ public class CaptureOn : MonoBehaviour
                     other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Pairing);
                     countCurrColliders++;
                 }
-                else
+            }
+            else
+            {
+                Destroy(other.gameObject.transform.parent.gameObject);
+                GameObject targetObject = GameObject.Find("Profiling");
+                object[] parameters;
+                switch (countMaxColliders)
                 {
-                    Destroy(other.gameObject.transform.parent.gameObject);
-                    GameObject targetObject = GameObject.Find("Profiling");
-                    switch (countMaxColliders)
-                    {
-                        case 0:
-                            object[] parameters = new object[] { currInt, 0, Time.time };
-                            targetObject.SendMessage("recordAttempt", parameters);
-                            targetObject.SendMessage("printRecord");
-                            break;
-                        case 1:
-                            object[] parameters = new object[] { currInt, 1, Time.time };
-                            targetObject.SendMessage("recordAttempt", parameters);
-                            targetObject.SendMessage("printRecord");
+                    case 0:
+                        parameters = new object[] { currInt, 0, Time.time };
+                        targetObject.SendMessage("recordAttempt", parameters);
+                        targetObject.SendMessage("printRecord");
+                        break;
+                    case 1:
+                        parameters = new object[] { currInt, 1, Time.time };
+                        targetObject.SendMessage("recordAttempt", parameters);
+                        targetObject.SendMessage("printRecord");
+                        break;
 
-                    }
                 }
             }
+            
         }
         
 
@@ -91,7 +95,7 @@ public class CaptureOn : MonoBehaviour
             countCurrColliders--;
         }
 
-    voit FixedUpdate()
+    void FixedUpdate()
         {
 
         }

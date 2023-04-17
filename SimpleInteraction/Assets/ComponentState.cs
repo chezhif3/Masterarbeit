@@ -43,6 +43,8 @@ public class ComponentState : MonoBehaviour
                 transform.Find("Throwable(Clone)").Find("Colliders").gameObject.SetActive(true);
                 transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(false);
                 transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
+                collidersUpdate();
+                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
                 assemblePhase = AssemblePhase.Identification;
                 break;
             case AssemblePhase.Pairing:
@@ -50,15 +52,15 @@ public class ComponentState : MonoBehaviour
                 transform.Find("Throwable(Clone)").Find("Colliders").gameObject.SetActive(true);
                 transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(true);
                 transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
+                collidersUpdate();
+                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = false;
                 assemblePhase = AssemblePhase.Pairing;
                 break;
             case AssemblePhase.Insertion:
                 transform.Find("LinearDrive(Clone)").gameObject.SetActive(true);
-                //Instantiate(colliderMeshPrefab, transform.Find("LinearDrive"));
                 assemblePhase = AssemblePhase.Insertion;
                 break;
         }
-        collidersUpdate();
     }
 
     private void collidersUpdate()
