@@ -266,7 +266,7 @@ MonoBehaviour:
   repositionGameObject: 1
   maintainMomemntum: 1
   momemtumDampenRate: 5
-  mappingFactor: 0.8
+  mappingFactor: 1
 --- !u!114 &8058736311414183654
 MonoBehaviour:
   m_ObjectHideFlags: 0

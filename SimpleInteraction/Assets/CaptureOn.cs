@@ -20,7 +20,7 @@ public class CaptureOn : MonoBehaviour
     void Start()
     {
         head = new ListNode();
-        head.value = new int[] {0,5};
+        head.value = new int[] {1,3};
         curr = head;
 
         // ListNode node1 = new ListNode();

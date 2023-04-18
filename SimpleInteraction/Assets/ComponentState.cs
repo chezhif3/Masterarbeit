@@ -23,13 +23,9 @@ public class ComponentState : MonoBehaviour
 
     public bool isPairing;
 
-
     //private bool ifInsert;
-    // public GameObject childColliders = new GameObject("childColliders");
-    // public GameObject childSockets = new GameObject("childSockets");
-
-
-
+    //public GameObject childColliders = new GameObject("childColliders");
+    //public GameObject childSockets = new GameObject("childSockets");
     //private int index = (int)assemblePhase;
 
     void Start()
@@ -216,7 +212,7 @@ public class ComponentState : MonoBehaviour
                     break;
             }
         }
-       // collidersUpdate();
+        // collidersUpdate();
         assemblePhase = phase;
         // Debug.Log(phase);
         // Debug.Log(assemblePhase);
@@ -258,7 +254,6 @@ public class ComponentState : MonoBehaviour
             Debug.Log("spawn linear drive");
             Instantiate(linearDrive,transform);
         }
-
     //    Debug.Log("spawn mesh");
     //    Instantiate(colliderMeshPrefab, transform.Find("Throwable(Clone)").Find("Colliders"));
     //    if (socketPrefab != null)

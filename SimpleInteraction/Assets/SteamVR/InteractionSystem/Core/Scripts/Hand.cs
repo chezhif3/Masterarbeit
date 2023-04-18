@@ -478,9 +478,21 @@ namespace Valve.VR.InteractionSystem
                 {
                     SteamVR_Skeleton_PoseSnapshot pose = attachedObject.interactable.skeletonPoser.GetBlendedPose(skeleton);
 
-                    //snap the object to the center of the attach point
-                    objectToAttach.transform.position = this.transform.TransformPoint(pose.position);
-                    objectToAttach.transform.rotation = this.transform.rotation * pose.rotation;
+                    if (attachmentOffset != null)
+                    {
+                        //offset the object from the hand by the positional and rotational difference between the offset transform and the attached object
+                        Quaternion rotDiff = Quaternion.Inverse(attachmentOffset.transform.rotation) * objectToAttach.transform.rotation;
+                        objectToAttach.transform.rotation = this.transform.rotation * pose.rotation * rotDiff;
+
+                        Vector3 posDiff = objectToAttach.transform.position - attachmentOffset.transform.position;
+                        objectToAttach.transform.position =  this.transform.TransformPoint(pose.position) + posDiff;
+                    }
+                    else
+                    {
+                        //snap the object to the center of the attach point
+                        objectToAttach.transform.position = this.transform.TransformPoint(pose.position);
+                        objectToAttach.transform.rotation = this.transform.rotation * pose.rotation;
+                    }
 
                     attachedObject.initialPositionalOffset = attachedObject.handAttachmentPointTransform.InverseTransformPoint(objectToAttach.transform.position);
                     attachedObject.initialRotationalOffset = Quaternion.Inverse(attachedObject.handAttachmentPointTransform.rotation) * objectToAttach.transform.rotation;
