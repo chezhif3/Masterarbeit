@@ -69,7 +69,7 @@ public class CoAxial : MonoBehaviour
                 // Debug.Log( hit.transform.parent.gameObject.name);
                 Debug.Log(transform.parent.parent.parent.parent.gameObject.name);
                 transform.parent.parent.parent.parent.gameObject.GetComponent<ComponentState>().capturedObject = hit.transform.parent.gameObject;
-                if (hit.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Pairing)
+                if (hit.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.PairingB)
                 {
                     // currPosition = currObject.transform.position;
                     // Debug.Log(startPosition.position);

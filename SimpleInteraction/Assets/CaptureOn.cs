@@ -20,7 +20,7 @@ public class CaptureOn : MonoBehaviour
     void Start()
     {
         head = new ListNode();
-        head.value = new int[] {3,5};
+        head.value = new int[] {5,0};
         curr = head;
 
         // ListNode node1 = new ListNode();
@@ -59,11 +59,21 @@ public class CaptureOn : MonoBehaviour
         {
             if (query != -1)
             {
-                if (other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Identification)
+                if(query==0)
                 {
-                    other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Pairing);
+                    other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.PairingA);
                     countCurrColliders++;
                 }
+                if (query == 1)
+                {
+                    other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.PairingB);
+                    countCurrColliders++;
+                }
+                //if (other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Identification)
+                //{
+                //    other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Pairing);
+                //    countCurrColliders++;
+                //}
             }
             else
             {
@@ -96,22 +106,24 @@ public class CaptureOn : MonoBehaviour
     {
         Debug.Log("leaveWorkstation:");
         Debug.Log(other.gameObject.transform.parent.name);
-        if(other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Pairing )
+        if (other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.PairingA)
         {
-            if(other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject!=null)
-                {
+            if (other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject != null)
+            {
                 other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification);
                 Destroy(other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject);
                 countCurrColliders--;
-                }
+            }
+        }
             other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification);
             countCurrColliders--;
-        }
+    }
 
-    void FixedUpdate()
-        {
 
-        }
+    //void FixedUpdate()
+    //    {
+
+    //    }
 
         // if(other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Insertion )
         // {
@@ -120,4 +132,4 @@ public class CaptureOn : MonoBehaviour
     }
 
 
-}
+

@@ -7,8 +7,9 @@ public class ComponentState : MonoBehaviour
     public enum AssemblePhase
     {
         Identification = 0,
-        Pairing = 1,
-        Insertion = 2,
+        PairingA = 1,
+        PairingB = 2,
+        Insertion = 3,
     };
 
     public AssemblePhase assemblePhase;
@@ -47,14 +48,23 @@ public class ComponentState : MonoBehaviour
                 transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
                 assemblePhase = AssemblePhase.Identification;
                 break;
-            case AssemblePhase.Pairing:
+            case AssemblePhase.PairingA:
                 transform.Find("Throwable(Clone)").gameObject.SetActive(true);
                 transform.Find("Throwable(Clone)").Find("Colliders").gameObject.SetActive(true);
                 transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(true);
                 transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
                 collidersUpdate();
                 transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
-                assemblePhase = AssemblePhase.Pairing;
+                assemblePhase = AssemblePhase.PairingA;
+                break;
+            case AssemblePhase.PairingB:
+                transform.Find("Throwable(Clone)").gameObject.SetActive(true);
+                transform.Find("Throwable(Clone)").Find("Colliders").gameObject.SetActive(true);
+                transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(false);
+                transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
+                collidersUpdate();
+                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
+                assemblePhase = AssemblePhase.PairingB;
                 break;
             case AssemblePhase.Insertion:
                 transform.Find("LinearDrive(Clone)").gameObject.SetActive(true);
@@ -179,7 +189,6 @@ public class ComponentState : MonoBehaviour
             switch (phase)
             {   
                 case AssemblePhase.Identification:
-                    //initialComponent();
                     transform.Find("Throwable(Clone)").position = _position;
                     transform.Find("Throwable(Clone)").rotation = _rotation;
                     transform.Find("Throwable(Clone)").gameObject.SetActive(true);
@@ -189,7 +198,7 @@ public class ComponentState : MonoBehaviour
                     collidersUpdate();
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
                     break;
-                case AssemblePhase.Pairing:
+                case AssemblePhase.PairingA:
                     transform.Find("Throwable(Clone)").position = _position;
                     transform.Find("Throwable(Clone)").rotation = _rotation;
                     transform.Find("Throwable(Clone)").gameObject.SetActive(true);
@@ -200,6 +209,16 @@ public class ComponentState : MonoBehaviour
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
                     Debug.Log("gravity");
                     Debug.Log(transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity);
+                    break;
+                case AssemblePhase.PairingB:
+                    transform.Find("Throwable(Clone)").position = _position;
+                    transform.Find("Throwable(Clone)").rotation = _rotation;
+                    transform.Find("Throwable(Clone)").gameObject.SetActive(true);
+                    transform.Find("Throwable(Clone)").Find("Colliders").gameObject.SetActive(true);
+                    transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(false);
+                    transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
+                    collidersUpdate();
+                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
                     break;
                 case AssemblePhase.Insertion:
                     transform.Find("Throwable(Clone)").gameObject.SetActive(false);
