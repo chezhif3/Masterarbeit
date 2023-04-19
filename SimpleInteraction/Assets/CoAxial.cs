@@ -39,7 +39,7 @@ public class CoAxial : MonoBehaviour
     void Update()
     {
         int layerMask1 =  1 << 6;
-        int layerMask2 = 1 << 7;
+        int layerMask2 = 1 << 6;
 
         RaycastHit hit;
         GameObject currObject;
@@ -59,8 +59,8 @@ public class CoAxial : MonoBehaviour
             // Debug.Log(isDone);
             // Debug.Log(startPosition.position);
             // Debug.DrawRay(startPosition.position, RayCastDirection, Color.yellow);
-            //if (Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask1)&& Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask2))
-            if (Physics.Raycast(startPosition.position, RayCastDirection,out hit, RayCastDistance,layerMask2 ) )
+            if (Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask1)&& Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask2))
+            //if (Physics.Raycast(startPosition.position, RayCastDirection,out hit, RayCastDistance,layerMask2 ) )
             {
                 Debug.Log("Did Hit");
                 Debug.Log(hit.transform.gameObject.name);
