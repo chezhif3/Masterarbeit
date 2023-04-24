@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq; 
+
 
 public class ComponentState : MonoBehaviour
 {
@@ -24,6 +26,8 @@ public class ComponentState : MonoBehaviour
     public Vector3 offset;
 
     public bool isPairing;
+
+    //private var tempObject;
 
     //private bool ifInsert;
     //public GameObject childColliders = new GameObject("childColliders");
@@ -56,8 +60,8 @@ public class ComponentState : MonoBehaviour
                 transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
                 collidersUpdate();
                 transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = false;
-                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().drag = 100;
-                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().angularDrag = 100;
+                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().drag = 500;
+                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().angularDrag = 500;
                 assemblePhase = AssemblePhase.PairingA;
                 break;
             case AssemblePhase.PairingB:
@@ -211,8 +215,8 @@ public class ComponentState : MonoBehaviour
                     transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
                     collidersUpdate();
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = false;
-                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().drag = 100;
-                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().angularDrag = 100;
+                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().drag = 500;
+                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().angularDrag = 500;
                     Debug.Log("gravity");
                     Debug.Log(transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity);
                     break;
@@ -235,7 +239,7 @@ public class ComponentState : MonoBehaviour
                     transform.Find("LinearDrive(Clone)").rotation = _rotation;
                     transform.Find("LinearDrive(Clone)").gameObject.SetActive(true);
                     collidersUpdate();
-                    EnableColliders(transform.Find("LinearDrive(Clone)").gameObject, false);
+                    EnableColliders(transform.Find("LinearDrive(Clone)").Find("Colliders").gameObject, true);
                     break;
             }
         }
@@ -245,15 +249,17 @@ public class ComponentState : MonoBehaviour
         // Debug.Log(assemblePhase);
     }
 
-    public void AddCollider(GameObject _gameObject,Vector3 positon, Quaternion rotation)
+    public void AddCollider(GameObject _gameObject)
     {
-        Instantiate(_gameObject,positon,rotation,transform.Find("Colliders"));
+        GameObject obj = Instantiate(_gameObject,_gameObject.transform.position, _gameObject.transform.rotation);
+        obj.transform.parent = transform.Find("Colliders");
         collidersUpdate();
     }
 
-    public void AddSockets(GameObject _gameObject,Vector3 positon, Quaternion rotation)
+    public void AddSockets(GameObject _gameObject)
     {
-        Instantiate(_gameObject,positon,rotation,transform.Find("Sockets"));
+        GameObject obj = Instantiate(gameObject,_gameObject.transform.position, _gameObject.transform.rotation);
+        obj.transform.parent = transform.Find("Sockets");
         collidersUpdate();
     }
 
@@ -302,7 +308,7 @@ public class ComponentState : MonoBehaviour
         Collider[] colliders = gameObject.GetComponents<Collider>();
         foreach (Collider collider in colliders)
         {
-            collider.enabled = ifenable;
+            collider.isTrigger = ifenable;
         }
 
         foreach (Transform child in gameObject.transform)
@@ -330,6 +336,28 @@ public class ComponentState : MonoBehaviour
                 transform.GetChild(i).position = _transform.position + offset;
                 Debug.Log("Move to: "+transform.GetChild(i).name+_transform.position);
             }
+        }
+    }
+
+    protected void TaskComplicated(int index)
+    {
+       // private var object;
+        var tempObject =  transform.Find("Throwable(Clone)").Find("Sockets").gameObject.GetComponentsInChildren<Transform>().Where(child => child.name.Contains(index.ToString())).Select(child => child.gameObject);
+        foreach (var obj in tempObject)
+        {
+            Debug.Log("Found object with name: " + obj.name);
+            obj.SetActive(false);
+        }
+
+    }
+
+    public void CloseSocket(int index)
+    {
+        //var tempObject =  transform.Find("Sockets").gameObject.GetComponentsInChildren<Transform>().Where(child => child.name.Contains(index.ToString())).Select(child => child.gameObject);
+        foreach (GameObject obj in transform.Find("Sockets").gameObject.GetComponentsInChildren<Transform>().Where(child => child.name.Contains(index.ToString())).Select(child => child.gameObject))
+        {
+            Debug.Log("Found object with name: " + obj.name);
+            obj.SetActive(false);
         }
     }
 

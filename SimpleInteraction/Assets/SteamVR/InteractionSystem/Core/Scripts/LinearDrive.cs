@@ -170,7 +170,7 @@ namespace Valve.VR.InteractionSystem
 				if(transform != null)
 				{
 					transform.position = Vector3.Lerp( startPosition.position, endPosition.position, linearMapping.value );
-                    transform.Rotate(startPosition.position - endPosition.position, Space.World);
+                   // transform.Rotate(startPosition.position - endPosition.position, Space.World);
                 }
 				transform.position = Vector3.Lerp( startPosition.position, endPosition.position, linearMapping.value );
 			}

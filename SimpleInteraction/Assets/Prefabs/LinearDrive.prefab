@@ -105,7 +105,8 @@ GameObject:
   - component: {fileID: 8058736311414183655}
   - component: {fileID: 8058736311414183654}
   - component: {fileID: 8058736311414183653}
-  m_Layer: 0
+  - component: {fileID: 3895154607900704794}
+  m_Layer: 8
   m_Name: LinearDrive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,3 +316,16 @@ MonoBehaviour:
   previewPoseSelection: 0
   blendingBehaviours: []
   scale: 1
+--- !u!135 &3895154607900704794
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8058736311414183651}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.025
+  m_Center: {x: 0, y: 0, z: 0}

@@ -43,7 +43,7 @@ public class CoAxial : MonoBehaviour
 
         RaycastHit hit;
         GameObject currObject;
-        GameObject parentObject;
+        GameObject parentObject = transform.parent.parent.parent.parent.gameObject;
         Vector3 currPosition;
         
 
@@ -62,8 +62,7 @@ public class CoAxial : MonoBehaviour
             if (Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask1)&& Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask2))
             //if (Physics.Raycast(startPosition.position, RayCastDirection,out hit, RayCastDistance,layerMask2 ) )
             {
-                Debug.Log("Did Hit");
-                Debug.Log(hit.transform.gameObject.name);
+                Debug.Log("Did Hit"+hit.transform.gameObject.name);
                 currObject = hit.transform.parent.gameObject;
                 //parentObject = transform.parent.parent.gameObject;
                 // Debug.Log( hit.transform.parent.gameObject.name);
@@ -98,27 +97,45 @@ public class CoAxial : MonoBehaviour
                 }
                 else if (hit.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Insertion)
                 {
-                    // Debug.Log("Inserted");
+                     Debug.Log("Inserted");
                     // Debug.Log(startPosition.position);
                     // currObject =parentObject.transform.Find("LinearDrive").gameObject;
                     // nextObject = prefab;
-                    // if ((hit.transform.parent.gameObject.name.transform.position - startPosition.position).magnitude > 0.4)
-                    // {
-                    //     currPosition = currObject.transform.position;
-                    //    // Destroy(parentObject);
-                    //     nextObject = prefab;
-                    //     nextObject.GetComponent<ComponentState>().assemblePhase = ComponentState.AssemblePhase.Pairing;
-                    //     Instantiate(nextObject, currPosition, Quaternion.identity);
-                    // }
-                    // if ((currObject.transform.position - transform.position).magnitude <= PostionTolerance &&( ((currObject.transform.eulerAngles.x- transform.eulerAngles.x)%90 <= AngleTolerance )| (currObject.transform.eulerAngles.x - transform.eulerAngles.x)<= AngleTolerance ))
-                    // {
-                    //    // Destroy(currObject);
-                    //     GameObject refOb = transform.Find("Reference").gameObject;
-                    //     Instantiate(nextObject, refOb.transform.position, refOb.transform.rotation,transform);
-                    //     transform.Find("Reference").gameObject.SetActive(false);
-                    //    // transform.Find("Solution").gameObject.SetActive(true);
-                    //     isDone = true;
-                    // }
+                    if ((hit.transform.position - startPosition.position).magnitude > ((endPosition.position - startPosition.position).magnitude-0.01))
+                    {
+                        Destroy(currObject);
+                    }
+                    if ((hit.transform.position - startPosition.position).magnitude <= PostionTolerance )
+                    //&&( ((currObject.transform.eulerAngles.x- transform.eulerAngles.x)%90 <= AngleTolerance )| (currObject.transform.eulerAngles.x - transform.eulerAngles.x)<= AngleTolerance ))
+                    {
+                       // Destroy(currObject);
+                        // GameObject refOb = transform.Find("Reference").gameObject;
+                        // Instantiate(nextObject, refOb.transform.position, refOb.transform.rotation,transform);
+                        // transform.Find("Reference").gameObject.SetActive(false);
+                       // transform.Find("Solution").gameObject.SetActive(true);
+                        // transform.gameObject.SetActive(false);
+                        //transform.parent.parent.parent.parent.gameObject.GetComponent<ComponentState>().AddCollider();
+                        currObject.SetActive(false);
+                        //string _name = name;
+                        currObject.transform.position = parentObject.transform.Find("Sockets").Find(name).Find("Reference").position;
+                        currObject.transform.rotation =parentObject.transform.Find("Sockets").Find(name).Find("Reference").rotation;
+                        if(name.Contains(currObject.GetComponent<ComponentState>().Index.ToString()))
+                        {
+                            transform.gameObject.SetActive(false);
+                            parentObject.GetComponent<ComponentState>().CloseSocket(currObject.GetComponent<ComponentState>().Index);
+
+                        }
+                        foreach(Transform child in currObject.transform.Find("Colliders"))
+                        {
+                            parentObject.GetComponent<ComponentState>().AddCollider(child.gameObject);
+                        }
+                        foreach(Transform child in currObject.transform.Find("Sockts"))
+                        {
+                            parentObject.GetComponent<ComponentState>().AddSockets(child.gameObject);
+                        }
+                        Destroy(currObject);
+                        isDone = true;
+                    }
                 }
             }
             else
