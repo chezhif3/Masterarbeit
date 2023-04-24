@@ -21,6 +21,7 @@ public class ComponentState : MonoBehaviour
     public GameObject Spawner;
     public string spawnName;
     public int Index;
+    public Vector3 offset;
 
     public bool isPairing;
 
@@ -54,7 +55,9 @@ public class ComponentState : MonoBehaviour
                 transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(true);
                 transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
                 collidersUpdate();
-                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
+                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = false;
+                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().drag = 100;
+                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().angularDrag = 100;
                 assemblePhase = AssemblePhase.PairingA;
                 break;
             case AssemblePhase.PairingB:
@@ -197,6 +200,7 @@ public class ComponentState : MonoBehaviour
                     transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
                     collidersUpdate();
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().isKinematic = false;
                     break;
                 case AssemblePhase.PairingA:
                     transform.Find("Throwable(Clone)").position = _position;
@@ -206,7 +210,9 @@ public class ComponentState : MonoBehaviour
                     transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(true);
                     transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
                     collidersUpdate();
-                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = false;
+                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().drag = 100;
+                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().angularDrag = 100;
                     Debug.Log("gravity");
                     Debug.Log(transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity);
                     break;
@@ -219,6 +225,7 @@ public class ComponentState : MonoBehaviour
                     transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
                     collidersUpdate();
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().isKinematic = false;
                     break;
                 case AssemblePhase.Insertion:
                     transform.Find("Throwable(Clone)").gameObject.SetActive(false);
@@ -303,6 +310,29 @@ public class ComponentState : MonoBehaviour
             EnableColliders(child.gameObject, ifenable);
         }
     }
+
+    public void MoveTo(Transform _transform)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            int activeCount=0;
+            float speed = 100;
+            if (transform.GetChild(i).gameObject.activeSelf == true)
+            {
+                activeCount++;
+                if(activeCount>1)
+                {
+                    Debug.Log("Error, 2 phases at the same time");
+                    Debug.Log(transform.GetChild(i).gameObject.name);
+                    break;
+                }
+                //Vector3.MoveTowards(transform.GetChild(i).position, _transform.position, speed * Time.deltaTime);
+                transform.GetChild(i).position = _transform.position + offset;
+                Debug.Log("Move to: "+transform.GetChild(i).name+_transform.position);
+            }
+        }
+    }
+
 
 }
 

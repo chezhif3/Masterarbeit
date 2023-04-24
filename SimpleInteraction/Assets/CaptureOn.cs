@@ -13,9 +13,13 @@ public class CaptureOn : MonoBehaviour
     private ListNode head;
     private ListNode curr;
 
+    public Transform center;
+    public int WorkMode=1;
 
     private int countMaxColliders;
     public int countCurrColliders=0;
+
+    public GameObject testOb;
 
     void Start()
     {
@@ -44,24 +48,19 @@ public class CaptureOn : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        int currInt = other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().Index;
-        int query = System.Array.IndexOf(curr.value, other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().Index);
-        Debug.Log("enterWorkstation:");
-        Debug.Log(other.gameObject.transform.parent.name);
-        Debug.Log("Index: "+query);
-        // if(!other.gameObject.transform.parent.parent.parent.gameObject.GetComponent<Valve.VR.InteractionSystem.Throwable>().attached)
-        // { 
-        if (countCurrColliders >= 2)
+        if(WorkMode==1)
         {
-            Destroy(other.gameObject.transform.parent.gameObject);
-        }
-        else
-        {
+            int currInt = other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().Index;
+            int query = System.Array.IndexOf(curr.value, other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().Index);
+            Debug.Log("enterWorkstation:");
+            Debug.Log(other.gameObject.transform.parent.name);
+            Debug.Log("Index: "+query);
             if (query != -1)
             {
                 if(query==0)
                 {
                     other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.PairingA);
+                    other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().MoveTo(center);
                     countCurrColliders++;
                 }
                 if (query == 1)
@@ -69,11 +68,6 @@ public class CaptureOn : MonoBehaviour
                     other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.PairingB);
                     countCurrColliders++;
                 }
-                //if (other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Identification)
-                //{
-                //    other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Pairing);
-                //    countCurrColliders++;
-                //}
             }
             else
             {
@@ -95,7 +89,62 @@ public class CaptureOn : MonoBehaviour
 
                 }
             }
+        }
+        if(WorkMode==2)
+        {
+            int currInt = other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().Index;
+            int query = System.Array.IndexOf(curr.value, other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().Index);
+            Debug.Log("enterWorkstation:");
+            Debug.Log(other.gameObject.transform.parent.name);
+            Debug.Log("Index: "+query);
+            // if(!other.gameObject.transform.parent.parent.parent.gameObject.GetComponent<Valve.VR.InteractionSystem.Throwable>().attached)
+            // { 
+            if (countCurrColliders >= 2)
+            {
+                Destroy(other.gameObject.transform.parent.gameObject);
+            }
+            else
+            {
+                if (query != -1)
+                {
+                    if(query==0)
+                    {
+                        other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.PairingA);
+                        countCurrColliders++;
+                    }
+                    if (query == 1)
+                    {
+                        other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.PairingB);
+                        countCurrColliders++;
+                    }
+                    //if (other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Identification)
+                    //{
+                    //    other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Pairing);
+                    //    countCurrColliders++;
+                    //}
+                }
+                else
+                {
+                    Destroy(other.gameObject.transform.parent.gameObject);
+                    GameObject targetObject = GameObject.Find("Profiling");
+                    object[] parameters;
+                    switch (countMaxColliders)
+                    {
+                        case 0:
+                            parameters = new object[] { currInt, 0, Time.time };
+                            targetObject.SendMessage("recordAttempt", parameters);
+                            targetObject.SendMessage("printRecord");
+                            break;
+                        case 1:
+                            parameters = new object[] { currInt, 1, Time.time };
+                            targetObject.SendMessage("recordAttempt", parameters);
+                            targetObject.SendMessage("printRecord");
+                            break;
+
+                    }
+                }
             
+            }
         }
         
 
@@ -105,9 +154,13 @@ public class CaptureOn : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         Debug.Log("leaveWorkstation:");
-        Debug.Log(other.gameObject.transform.parent.name);
+        //Debug.Log(other.gameObject.transform.parent.name);
+        Debug.Log(other.name);
+        Debug.Log(other.transform.position);
         if (other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.PairingA)
         {
+            Debug.Log("TestOb");
+            Instantiate(testOb,other.transform.position,other.transform.rotation);
             if (other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject != null)
             {
                 other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification);

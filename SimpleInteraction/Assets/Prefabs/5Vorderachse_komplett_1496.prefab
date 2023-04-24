@@ -422,6 +422,7 @@ MonoBehaviour:
   Spawner: {fileID: 3627356330480093003, guid: 666974e974d279041a7a55a29e31051e, type: 3}
   spawnName: 
   Index: 5
+  offset: {x: 0, y: 0, z: 0.28}
   isPairing: 0
 --- !u!1 &3393511262174840707
 GameObject:
