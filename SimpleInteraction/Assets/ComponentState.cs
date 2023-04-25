@@ -24,6 +24,7 @@ public class ComponentState : MonoBehaviour
     public string spawnName;
     public int Index;
     public Vector3 offset;
+    public Quaternion offsetRotation;
 
     public bool isPairing;
 
@@ -63,8 +64,8 @@ public class ComponentState : MonoBehaviour
                 transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
                 collidersUpdate();
                 transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = false;
-                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().drag = 500;
-                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().angularDrag = 500;
+                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().drag = 50;
+                transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().angularDrag = 50;
                 assemblePhase = AssemblePhase.PairingA;
                 break;
             case AssemblePhase.PairingB:
@@ -207,6 +208,7 @@ public class ComponentState : MonoBehaviour
                     transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(false);
                     transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
                     collidersUpdate();
+                    EnableColliders(transform.Find("LinearDrive(Clone)").Find("Colliders").gameObject, false);
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().isKinematic = false;
                     break;
@@ -218,9 +220,10 @@ public class ComponentState : MonoBehaviour
                     transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(true);
                     transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
                     collidersUpdate();
+                    EnableColliders(transform.Find("Throwable(Clone)").Find("Colliders").gameObject, true);
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = false;
-                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().drag = 500;
-                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().angularDrag = 500;
+                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().drag = 50;
+                    transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().angularDrag = 50;
                     Debug.Log("gravity");
                     Debug.Log(transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity);
                     parameters = new object[] {Index, 1, Time.time };
@@ -347,6 +350,7 @@ public class ComponentState : MonoBehaviour
                 }
                 //Vector3.MoveTowards(transform.GetChild(i).position, _transform.position, speed * Time.deltaTime);
                 transform.GetChild(i).position = _transform.position + offset;
+                transform.GetChild(i).rotation = offsetRotation;
                 Debug.Log("Move to: "+transform.GetChild(i).name+_transform.position);
             }
         }

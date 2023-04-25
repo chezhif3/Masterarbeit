@@ -104,7 +104,7 @@ public class CoAxial : MonoBehaviour
                     // Debug.Log(startPosition.position);
                     // currObject =parentObject.transform.Find("LinearDrive").gameObject;
                     // nextObject = prefab;
-                    if ((hit.transform.position - startPosition.position).magnitude > ((endPosition.position - startPosition.position).magnitude-0.01))
+                    if ((hit.transform.position - startPosition.position).magnitude > ((endPosition.position - startPosition.position).magnitude+0.1))
                     {
                         object[] parameters = new object[] { currObject.GetComponent<ComponentState>().Index, 3, Time.time };
                         RecordObj.SendMessage("AttemptMistake", parameters);

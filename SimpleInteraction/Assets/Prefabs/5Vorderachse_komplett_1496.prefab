@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 3393511261174124142}
   - component: {fileID: 3393511261174124143}
   - component: {fileID: 3393511261174124136}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Collider4Physics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -422,7 +422,8 @@ MonoBehaviour:
   Spawner: {fileID: 3627356330480093003, guid: 666974e974d279041a7a55a29e31051e, type: 3}
   spawnName: 
   Index: 5
-  offset: {x: 0, y: 0, z: 0.28}
+  offset: {x: 0, y: 0, z: -0.28}
+  offsetRotation: {x: 0, y: -0.70710677, z: 0, w: 0.70710677}
   isPairing: 0
   RecordObj: {fileID: 5802031063011691030, guid: 0a3f08efac6840840b7278fcb2587dd3,
     type: 3}
