@@ -27,6 +27,8 @@ public class ComponentState : MonoBehaviour
 
     public bool isPairing;
 
+    public GameObject RecordObj;
+
     //private var tempObject;
 
     //private bool ifInsert;
@@ -36,6 +38,7 @@ public class ComponentState : MonoBehaviour
 
     void Start()
     {
+        RecordObj = GameObject.Find("Profiling");
         spawnName = Index.ToString()+"intanPoint";
         Debug.Log( spawnName);
         Spawner = GameObject.Find(spawnName);
@@ -193,6 +196,7 @@ public class ComponentState : MonoBehaviour
         }
         if (assemblePhase != phase)
         {
+            object[] parameters;
             switch (phase)
             {   
                 case AssemblePhase.Identification:
@@ -219,6 +223,9 @@ public class ComponentState : MonoBehaviour
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().angularDrag = 500;
                     Debug.Log("gravity");
                     Debug.Log(transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity);
+                    parameters = new object[] {Index, 1, Time.time };
+                    RecordObj.SendMessage("AttemptSuccess", parameters);
+                    RecordObj.SendMessage("printRecord");
                     break;
                 case AssemblePhase.PairingB:
                     transform.Find("Throwable(Clone)").position = _position;
@@ -230,6 +237,9 @@ public class ComponentState : MonoBehaviour
                     collidersUpdate();
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                    parameters = new object[] { Index, 1, Time.time };
+                    RecordObj.SendMessage("AttemptSuccess", parameters);
+                    RecordObj.SendMessage("printRecord");
                     break;
                 case AssemblePhase.Insertion:
                     transform.Find("Throwable(Clone)").gameObject.SetActive(false);
@@ -240,6 +250,9 @@ public class ComponentState : MonoBehaviour
                     transform.Find("LinearDrive(Clone)").gameObject.SetActive(true);
                     collidersUpdate();
                     EnableColliders(transform.Find("LinearDrive(Clone)").Find("Colliders").gameObject, true);
+                    parameters = new object[] { Index, 2, Time.time };
+                    RecordObj.SendMessage("AttemptSuccess", parameters);
+                    RecordObj.SendMessage("printRecord");
                     break;
             }
         }
@@ -358,6 +371,16 @@ public class ComponentState : MonoBehaviour
         {
             Debug.Log("Found object with name: " + obj.name);
             obj.SetActive(false);
+        }
+    }
+
+    public void OpenSocket(int index)
+    {
+        //var tempObject =  transform.Find("Sockets").gameObject.GetComponentsInChildren<Transform>().Where(child => child.name.Contains(index.ToString())).Select(child => child.gameObject);
+        foreach (GameObject obj in transform.Find("Sockets").gameObject.GetComponentsInChildren<Transform>(true).Where(child => child.name.Contains(index.ToString())).Select(child => child.gameObject))
+        {
+            Debug.Log("Found object with name: " + obj.name);
+            obj.SetActive(true);
         }
     }
 

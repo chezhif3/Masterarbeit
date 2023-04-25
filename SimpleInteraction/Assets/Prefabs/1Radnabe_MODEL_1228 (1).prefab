@@ -299,6 +299,7 @@ MonoBehaviour:
   RayCastDistance: Infinity
   prefab: {fileID: 0}
   inverseRaydir: 0
+  RecordObj: {fileID: 0}
   isDone: 0
 --- !u!1 &2744377879803980760
 GameObject:
@@ -595,7 +596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2744377880256088263
 Transform:
   m_ObjectHideFlags: 0
@@ -637,7 +638,10 @@ MonoBehaviour:
   Spawner: {fileID: 0}
   spawnName: 
   Index: 1
+  offset: {x: 0, y: 0, z: 0}
   isPairing: 0
+  RecordObj: {fileID: 5802031063011691030, guid: 0a3f08efac6840840b7278fcb2587dd3,
+    type: 3}
 --- !u!1 &2744377880624629572
 GameObject:
   m_ObjectHideFlags: 0

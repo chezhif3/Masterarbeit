@@ -18,6 +18,8 @@ public class CoAxial : MonoBehaviour
     public GameObject prefab;
     public bool inverseRaydir;
 
+    public GameObject RecordObj;
+
 
     public bool isDone = false;
 
@@ -30,6 +32,7 @@ public class CoAxial : MonoBehaviour
             else
             { RayCastDirection = startPosition.position - endPosition.position; }
         }
+        RecordObj = GameObject.Find("Profiling");
     }
 
     // Update is called once per frame
@@ -103,9 +106,12 @@ public class CoAxial : MonoBehaviour
                     // nextObject = prefab;
                     if ((hit.transform.position - startPosition.position).magnitude > ((endPosition.position - startPosition.position).magnitude-0.01))
                     {
+                        object[] parameters = new object[] { currObject.GetComponent<ComponentState>().Index, 3, Time.time };
+                        RecordObj.SendMessage("AttemptMistake", parameters);
+                        RecordObj.SendMessage("printRecord");
                         Destroy(currObject);
                     }
-                    if ((hit.transform.position - startPosition.position).magnitude <= PostionTolerance )
+                    else if ((hit.transform.position - startPosition.position).magnitude <= PostionTolerance )
                     //&&( ((currObject.transform.eulerAngles.x- transform.eulerAngles.x)%90 <= AngleTolerance )| (currObject.transform.eulerAngles.x - transform.eulerAngles.x)<= AngleTolerance ))
                     {
                        // Destroy(currObject);
@@ -134,6 +140,9 @@ public class CoAxial : MonoBehaviour
                             parentObject.GetComponent<ComponentState>().AddSockets(child.gameObject);
                         }
                         Destroy(currObject);
+                        object[] parameters = new object[] { currObject.GetComponent<ComponentState>().Index, 1, Time.time };
+                        RecordObj.SendMessage("AttemptSuccess", parameters);
+                        RecordObj.SendMessage("printRecord");
                         isDone = true;
                     }
                 }

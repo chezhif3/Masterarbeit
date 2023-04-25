@@ -721,7 +721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3620547620467560469
 Transform:
   m_ObjectHideFlags: 0
@@ -761,6 +761,7 @@ MonoBehaviour:
   RayCastDistance: Infinity
   prefab: {fileID: 0}
   inverseRaydir: 0
+  RecordObj: {fileID: 0}
   isDone: 0
 --- !u!1 &3620547620537088765
 GameObject:
@@ -820,6 +821,8 @@ MonoBehaviour:
   Index: 3
   offset: {x: 0, y: 0, z: 0}
   isPairing: 0
+  RecordObj: {fileID: 5802031063011691030, guid: 0a3f08efac6840840b7278fcb2587dd3,
+    type: 3}
 --- !u!1 &3620547620594554439
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,7 +839,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3620547620594554438
 Transform:
   m_ObjectHideFlags: 0
@@ -876,6 +879,7 @@ MonoBehaviour:
   RayCastDistance: Infinity
   prefab: {fileID: 0}
   inverseRaydir: 0
+  RecordObj: {fileID: 0}
   isDone: 0
 --- !u!1 &3620547620614186092
 GameObject:

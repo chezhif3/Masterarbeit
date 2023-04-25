@@ -21,6 +21,10 @@ public class CaptureOn : MonoBehaviour
 
     public GameObject testOb;
 
+    public GameObject RecordObj;
+
+    public int testNr = 0;
+
     void Start()
     {
         head = new ListNode();
@@ -59,6 +63,7 @@ public class CaptureOn : MonoBehaviour
             {
                 if(query==0)
                 {
+                    other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().OpenSocket(testNr);
                     other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.PairingA);
                     other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().MoveTo(center);
                     countCurrColliders++;
@@ -72,19 +77,23 @@ public class CaptureOn : MonoBehaviour
             else
             {
                 Destroy(other.gameObject.transform.parent.gameObject);
-                GameObject targetObject = GameObject.Find("Profiling");
                 object[] parameters;
                 switch (countMaxColliders)
                 {
                     case 0:
                         parameters = new object[] { currInt, 0, Time.time };
-                        targetObject.SendMessage("recordAttempt", parameters);
-                        targetObject.SendMessage("printRecord");
+                        RecordObj.SendMessage("AttemptMistake", parameters);
+                        RecordObj.SendMessage("printRecord");
                         break;
                     case 1:
                         parameters = new object[] { currInt, 1, Time.time };
-                        targetObject.SendMessage("recordAttempt", parameters);
-                        targetObject.SendMessage("printRecord");
+                        RecordObj.SendMessage("AttemptMistake", parameters);
+                        RecordObj.SendMessage("printRecord");
+                        break;
+                    default:
+                        parameters = new object[] { currInt, 2, Time.time };
+                        RecordObj.SendMessage("AttemptMistake", parameters);
+                        RecordObj.SendMessage("printRecord");
                         break;
 
                 }
@@ -126,19 +135,18 @@ public class CaptureOn : MonoBehaviour
                 else
                 {
                     Destroy(other.gameObject.transform.parent.gameObject);
-                    GameObject targetObject = GameObject.Find("Profiling");
                     object[] parameters;
                     switch (countMaxColliders)
                     {
                         case 0:
                             parameters = new object[] { currInt, 0, Time.time };
-                            targetObject.SendMessage("recordAttempt", parameters);
-                            targetObject.SendMessage("printRecord");
+                            RecordObj.SendMessage("AttemptMistake", parameters);
+                            RecordObj.SendMessage("printRecord");
                             break;
                         case 1:
                             parameters = new object[] { currInt, 1, Time.time };
-                            targetObject.SendMessage("recordAttempt", parameters);
-                            targetObject.SendMessage("printRecord");
+                            RecordObj.SendMessage("AttemptMistake", parameters);
+                            RecordObj.SendMessage("printRecord");
                             break;
 
                     }
