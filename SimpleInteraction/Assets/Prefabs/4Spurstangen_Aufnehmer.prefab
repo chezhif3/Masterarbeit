@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 7984801626116627007}
   - component: {fileID: 7984801626116626944}
   m_Layer: 0
-  m_Name: Mesh
+  m_Name: 4Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,6 +212,7 @@ MonoBehaviour:
   spawnName: 
   Index: 4
   offset: {x: 0, y: 0, z: 0}
+  offsetRotation: {x: 0, y: 0, z: 0, w: 0}
   isPairing: 0
   RecordObj: {fileID: 5802031063011691030, guid: 0a3f08efac6840840b7278fcb2587dd3,
     type: 3}

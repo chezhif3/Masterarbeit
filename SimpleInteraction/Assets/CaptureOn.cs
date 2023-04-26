@@ -35,9 +35,9 @@ public class CaptureOn : MonoBehaviour
         node1.value = new int[] { 1, 2 };
         head.next = node1;
 
-        // ListNode node2 = new ListNode();
-        // node2.value =  new int[] {1,3};
-        //node1.next = node2;
+        ListNode node2 = new ListNode();
+        node2.value = new int[] {3, 1};
+        node1.next = node2;
 
         // ListNode node3 = new ListNode();
         // node3.value =  new int[] {3,5};

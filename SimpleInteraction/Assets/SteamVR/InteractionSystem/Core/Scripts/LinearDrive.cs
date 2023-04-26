@@ -20,7 +20,7 @@ namespace Valve.VR.InteractionSystem
         public bool repositionGameObject = true;
         public bool maintainMomemntum = true;
         public float momemtumDampenRate = 5.0f;
-        public float mappingFactor = 0.6f;
+        public float mappingFactor = 1f;
 
         protected Hand.AttachmentFlags attachmentFlags = Hand.AttachmentFlags.DetachFromOtherHand;
 
@@ -65,7 +65,7 @@ namespace Valve.VR.InteractionSystem
 
             linearMapping.value = CalculateLinearMapping(transform);
             initialMappingOffset = linearMapping.value;
-            currDirection = transform.localEulerAngles.x;
+            currDirection = transform.localEulerAngles.z;
 
             //testT = transform.position;
             //transform.position = startPosition.position + (endPosition.position - startPosition.position).normalized * Vector3.Dot(transform.position - startPosition.position, endPosition.position - startPosition.position);

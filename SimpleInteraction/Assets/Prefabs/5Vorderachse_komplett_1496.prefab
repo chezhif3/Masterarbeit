@@ -343,7 +343,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3393511261879393942}
   m_Layer: 0
-  m_Name: Mesh
+  m_Name: 5Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -841,6 +841,7 @@ MonoBehaviour:
   RecordObj: {fileID: 0}
   WorkStation: {fileID: 0}
   isDone: 0
+  temp: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8219427690744819136
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,6 +997,7 @@ MonoBehaviour:
   RecordObj: {fileID: 0}
   WorkStation: {fileID: 0}
   isDone: 0
+  temp: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8452718797683815853
 GameObject:
   m_ObjectHideFlags: 0

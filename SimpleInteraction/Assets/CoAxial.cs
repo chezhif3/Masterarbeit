@@ -92,7 +92,7 @@ public class CoAxial : MonoBehaviour
                     foreach (MeshFilter obj in Objs)
                     {
                         
-                        if(obj.name == "Mesh")
+                        if(obj.name == (currObject.gameObject.GetComponent<ComponentState>().Index.ToString()+"Mesh"))
                         {
                             hit.transform.rotation = transform.rotation*Quaternion.Inverse(obj.transform.localRotation);
                             temp = obj.transform.localRotation;
@@ -154,11 +154,35 @@ public class CoAxial : MonoBehaviour
                         currObject.transform.rotation =parentObject.transform.Find("Sockets").Find(name).Find("Reference").rotation;
                         if(name.Contains(currObject.GetComponent<ComponentState>().Index.ToString()))
                         {
-                            transform.gameObject.SetActive(false);
+                            hit.transform.gameObject.SetActive(false);
                             parentObject.GetComponent<ComponentState>().CloseSocket(currObject.GetComponent<ComponentState>().Index);
 
                         }
-                        foreach(Transform child in currObject.transform.Find("Colliders"))
+
+                        MeshFilter[] Objs = currObject.transform.GetComponentsInChildren<MeshFilter>();
+                        MeshFilter[] Objss = transform.parent.GetComponentsInChildren<MeshFilter>();
+
+                        // hit.transform.rotation = transform.rotation * Objs[0].gameObject.transform.parent.localRotation;
+                        foreach (MeshFilter obj in Objs)
+                        {
+
+                            if (obj.name == (currObject.gameObject.GetComponent<ComponentState>().Index.ToString() + "Mesh"))
+                            {
+                                hit.transform.rotation = transform.rotation * Quaternion.Inverse(obj.transform.localRotation);
+                                //temp = Quaternion.Inverse(obj.transform.localRotation);
+                            }
+                        }
+                        foreach (MeshFilter obj in Objss)
+                        {
+
+                            if (obj.name == (parentObject.GetComponent<ComponentState>().Index.ToString() + "Mesh"))
+                            {
+                                Debug.Log(obj.name);
+                                 hit.transform.rotation = transform.rotation * Quaternion.Inverse(obj.transform.localRotation);
+                                //temp = obj.transform.localRotation*temp;
+                            }
+                        }
+                        foreach (Transform child in currObject.transform.Find("Colliders"))
                         {
                             parentObject.GetComponent<ComponentState>().AddCollider(child.gameObject);
                         }
