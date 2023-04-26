@@ -16448,9 +16448,7 @@ MonoBehaviour:
   center: {fileID: 1103184607}
   WorkMode: 1
   countCurrColliders: 0
-  testOb: {fileID: 2411113660433938705, guid: f58798c7797a87947ac17d4369b90af6, type: 3}
   RecordObj: {fileID: 103907121}
-  testNr: 0
 --- !u!65 &1103184609
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34301,12 +34299,12 @@ PrefabInstance:
     - target: {fileID: 3627356330480093002, guid: 666974e974d279041a7a55a29e31051e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.937
+      value: -0.78
       objectReference: {fileID: 0}
     - target: {fileID: 3627356330480093002, guid: 666974e974d279041a7a55a29e31051e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.516
+      value: 15.45
       objectReference: {fileID: 0}
     - target: {fileID: 3627356330480093002, guid: 666974e974d279041a7a55a29e31051e,
         type: 3}
@@ -36829,17 +36827,17 @@ PrefabInstance:
     - target: {fileID: 8354266459305597386, guid: 64cbb6f144ccad5409d54297c9984732,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.845
+      value: -4.467
       objectReference: {fileID: 0}
     - target: {fileID: 8354266459305597386, guid: 64cbb6f144ccad5409d54297c9984732,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.468
+      value: -0.143
       objectReference: {fileID: 0}
     - target: {fileID: 8354266459305597386, guid: 64cbb6f144ccad5409d54297c9984732,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.746
+      value: 14.701
       objectReference: {fileID: 0}
     - target: {fileID: 8354266459305597386, guid: 64cbb6f144ccad5409d54297c9984732,
         type: 3}

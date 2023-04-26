@@ -210,6 +210,7 @@ public class ComponentState : MonoBehaviour
                     collidersUpdate();
                     EnableColliders(transform.Find("LinearDrive(Clone)").Find("Colliders").gameObject, false);
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    Debug.Log("gravityid"+ transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity);
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().isKinematic = false;
                     break;
                 case AssemblePhase.PairingA:

@@ -19,9 +19,12 @@ public class CoAxial : MonoBehaviour
     public bool inverseRaydir;
 
     public GameObject RecordObj;
+    public GameObject WorkStation;
 
 
     public bool isDone = false;
+
+    public Quaternion temp;
 
     void Start()
     {
@@ -33,6 +36,7 @@ public class CoAxial : MonoBehaviour
             { RayCastDirection = startPosition.position - endPosition.position; }
         }
         RecordObj = GameObject.Find("Profiling");
+        WorkStation = GameObject.Find("Cube");
     }
 
     // Update is called once per frame
@@ -80,6 +84,28 @@ public class CoAxial : MonoBehaviour
                     //currObject.transform.Find("Collider")
                     //currObject.transform.parent = transform;
                     Debug.Log("ChangingPhase");
+                    //temp = hit.transform.position;
+                    hit.transform.position = startPosition.position + ((endPosition.position - startPosition.position).normalized) *((hit.transform.position - startPosition.position).magnitude * Mathf.Cos(Mathf.PI*Vector3.Angle(endPosition.position - startPosition.position, hit.transform.position - startPosition.position)/180));
+                    MeshFilter[] Objs = currObject.transform.GetComponentsInChildren<MeshFilter>();
+ 
+                   // hit.transform.rotation = transform.rotation * Objs[0].gameObject.transform.parent.localRotation;
+                    foreach (MeshFilter obj in Objs)
+                    {
+                        
+                        if(obj.name == "Mesh")
+                        {
+                            hit.transform.rotation = transform.rotation*Quaternion.Inverse(obj.transform.localRotation);
+                            temp = obj.transform.localRotation;
+                            Debug.Log("scren;" + obj.name);
+                            Debug.Log("Rerotate");
+                        }
+                    }
+                    //Debug.Log("11: " + temp.x);
+                    //Debug.Log("start: " + startPosition.position+"end: " + endPosition.position + "temp: "+temp+"Vector: "+ (endPosition.position - startPosition.position).normalized);
+                    //Debug.Log("1: " + (temp - startPosition.position).magnitude);
+                    //Debug.Log("2: " + (endPosition.position - startPosition.position));
+                    //Debug.Log("Angle: " + Vector3.Angle(temp - startPosition.position, endPosition.position - startPosition.position));
+                    //Debug.Log("var1: " + Vector3.Dot(temp - startPosition.position, endPosition.position - startPosition.position) + " var2: " + (temp - startPosition.position).magnitude  * Mathf.Cos(Mathf.PI * Vector3.Angle(endPosition.position - startPosition.position, temp - startPosition.position) / 180));
                     currObject.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Insertion);
                     currObject.transform.Find("LinearDrive(Clone)").Find("Start").position = transform.Find("Start").position;
                     currObject.transform.Find("LinearDrive(Clone)").Find("Start").SetParent(transform.Find("Start"));
@@ -104,7 +130,7 @@ public class CoAxial : MonoBehaviour
                     // Debug.Log(startPosition.position);
                     // currObject =parentObject.transform.Find("LinearDrive").gameObject;
                     // nextObject = prefab;
-                    if ((hit.transform.position - startPosition.position).magnitude > ((endPosition.position - startPosition.position).magnitude+0.1))
+                    if ((hit.transform.position - startPosition.position).magnitude > ((endPosition.position - startPosition.position).magnitude-0.01))
                     {
                         object[] parameters = new object[] { currObject.GetComponent<ComponentState>().Index, 3, Time.time };
                         RecordObj.SendMessage("AttemptMistake", parameters);
@@ -114,13 +140,14 @@ public class CoAxial : MonoBehaviour
                     else if ((hit.transform.position - startPosition.position).magnitude <= PostionTolerance )
                     //&&( ((currObject.transform.eulerAngles.x- transform.eulerAngles.x)%90 <= AngleTolerance )| (currObject.transform.eulerAngles.x - transform.eulerAngles.x)<= AngleTolerance ))
                     {
-                       // Destroy(currObject);
+                        // Destroy(currObject);
                         // GameObject refOb = transform.Find("Reference").gameObject;
                         // Instantiate(nextObject, refOb.transform.position, refOb.transform.rotation,transform);
                         // transform.Find("Reference").gameObject.SetActive(false);
-                       // transform.Find("Solution").gameObject.SetActive(true);
+                        // transform.Find("Solution").gameObject.SetActive(true);
                         // transform.gameObject.SetActive(false);
                         //transform.parent.parent.parent.parent.gameObject.GetComponent<ComponentState>().AddCollider();
+                        WorkStation.SendMessage("NextStep");
                         currObject.SetActive(false);
                         //string _name = name;
                         currObject.transform.position = parentObject.transform.Find("Sockets").Find(name).Find("Reference").position;
@@ -140,10 +167,11 @@ public class CoAxial : MonoBehaviour
                             parentObject.GetComponent<ComponentState>().AddSockets(child.gameObject);
                         }
                         Destroy(currObject);
-                        object[] parameters = new object[] { currObject.GetComponent<ComponentState>().Index, 1, Time.time };
+                        object[] parameters = new object[] { currObject.GetComponent<ComponentState>().Index, 2, Time.time };
                         RecordObj.SendMessage("AttemptSuccess", parameters);
                         RecordObj.SendMessage("printRecord");
                         isDone = true;
+                      
                     }
                 }
             }

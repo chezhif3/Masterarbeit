@@ -19,11 +19,11 @@ public class CaptureOn : MonoBehaviour
     private int countMaxColliders;
     public int countCurrColliders=0;
 
-    public GameObject testOb;
+    //public GameObject testOb;
 
     public GameObject RecordObj;
 
-    public int testNr = 0;
+    //public int testNr = 0;
 
     void Start()
     {
@@ -31,23 +31,28 @@ public class CaptureOn : MonoBehaviour
         head.value = new int[] {5,0};
         curr = head;
 
-        // ListNode node1 = new ListNode();
-        // node1.value =  new int[] {1,2};
+        ListNode node1 = new ListNode();
+        node1.value = new int[] { 1, 2 };
+        head.next = node1;
 
         // ListNode node2 = new ListNode();
         // node2.value =  new int[] {1,3};
+        //node1.next = node2;
 
         // ListNode node3 = new ListNode();
         // node3.value =  new int[] {3,5};
+        //node2.next = node3;
 
         // ListNode node4 = new ListNode();
         // node4.value =  new int[] {3,4};
+        //node3.next = node4;
 
     }
 
     void NextStep()
     {
         curr = curr.next;
+        Debug.Log("Next:" + curr.value[0]+curr.value[1]);
     }
 
     private void OnTriggerStay(Collider other)
@@ -65,7 +70,7 @@ public class CaptureOn : MonoBehaviour
                 {
                     if (query == 0)
                     {
-                        other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().OpenSocket(curr.value[0]);
+                        other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().OpenSocket(curr.value[1]);
                         other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.PairingA);
                         other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().MoveTo(center);
                         countCurrColliders++;
@@ -167,8 +172,8 @@ public class CaptureOn : MonoBehaviour
         Debug.Log(other.transform.position);
         if (other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.PairingA)
         {
-            Debug.Log("TestOb");
-            Instantiate(testOb,other.transform.position,other.transform.rotation);
+            //Debug.Log("TestOb");
+            //Instantiate(testOb,other.transform.position,other.transform.rotation);
             if (other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject != null&& other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject.GetComponent<ComponentState>().assemblePhase != ComponentState.AssemblePhase.Insertion)
             {
                 other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification);
