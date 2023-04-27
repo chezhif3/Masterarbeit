@@ -1013,7 +1013,9 @@ MonoBehaviour:
   prefab: {fileID: 0}
   inverseRaydir: 0
   RecordObj: {fileID: 0}
+  WorkStation: {fileID: 0}
   isDone: 0
+  temp: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &43743849
 GameObject:
   m_ObjectHideFlags: 0
@@ -4343,7 +4345,9 @@ MonoBehaviour:
   prefab: {fileID: 0}
   inverseRaydir: 0
   RecordObj: {fileID: 0}
+  WorkStation: {fileID: 0}
   isDone: 0
+  temp: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &277229944
 GameObject:
   m_ObjectHideFlags: 0
@@ -16460,7 +16464,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1, z: 1.21}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1103184610
 MeshRenderer:

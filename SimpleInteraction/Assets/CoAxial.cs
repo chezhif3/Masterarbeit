@@ -86,20 +86,21 @@ public class CoAxial : MonoBehaviour
                     Debug.Log("ChangingPhase");
                     //temp = hit.transform.position;
                     hit.transform.position = startPosition.position + ((endPosition.position - startPosition.position).normalized) *((hit.transform.position - startPosition.position).magnitude * Mathf.Cos(Mathf.PI*Vector3.Angle(endPosition.position - startPosition.position, hit.transform.position - startPosition.position)/180));
-                    MeshFilter[] Objs = currObject.transform.GetComponentsInChildren<MeshFilter>();
- 
+                    //MeshFilter[] Objs = currObject.transform.GetComponentsInChildren<MeshFilter>();
+                    hit.transform.rotation = transform.rotation* Quaternion.Inverse(hit.transform.Find("Colliders").Find("Colliders(Clone)").localRotation);
+
                    // hit.transform.rotation = transform.rotation * Objs[0].gameObject.transform.parent.localRotation;
-                    foreach (MeshFilter obj in Objs)
-                    {
-                        
-                        if(obj.name == (currObject.gameObject.GetComponent<ComponentState>().Index.ToString()+"Mesh"))
-                        {
-                            hit.transform.rotation = transform.rotation*Quaternion.Inverse(obj.transform.localRotation);
-                            temp = obj.transform.localRotation;
-                            Debug.Log("scren;" + obj.name);
-                            Debug.Log("Rerotate");
-                        }
-                    }
+                   //foreach (MeshFilter obj in Objs)
+                   //{
+
+                    //    if(obj.name == (currObject.gameObject.GetComponent<ComponentState>().Index.ToString()+"Mesh"))
+                    //    {
+                    //        hit.transform.rotation = transform.rotation*Quaternion.Inverse(obj.transform.localRotation);
+                    //        temp = obj.transform.localRotation;
+                    //        Debug.Log("scren;" + obj.name);
+                    //        Debug.Log("Rerotate");
+                    //    }
+                    //}
                     //Debug.Log("11: " + temp.x);
                     //Debug.Log("start: " + startPosition.position+"end: " + endPosition.position + "temp: "+temp+"Vector: "+ (endPosition.position - startPosition.position).normalized);
                     //Debug.Log("1: " + (temp - startPosition.position).magnitude);
@@ -127,6 +128,7 @@ public class CoAxial : MonoBehaviour
                 else if (hit.transform.parent.gameObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Insertion)
                 {
                      Debug.Log("Inserted");
+                    Debug.Log("aww" + hit.transform.gameObject.name);
                     // Debug.Log(startPosition.position);
                     // currObject =parentObject.transform.Find("LinearDrive").gameObject;
                     // nextObject = prefab;
@@ -151,7 +153,8 @@ public class CoAxial : MonoBehaviour
                         currObject.SetActive(false);
                         //string _name = name;
                         currObject.transform.position = parentObject.transform.Find("Sockets").Find(name).Find("Reference").position;
-                        currObject.transform.rotation =parentObject.transform.Find("Sockets").Find(name).Find("Reference").rotation;
+                        currObject.transform.rotation = parentObject.transform.Find("Sockets").Find(name).Find("Reference").rotation*Quaternion.Inverse(hit.transform.parent.parent.localRotation);
+                        Debug.Log("aee" + hit.transform.gameObject.name);
                         if(name.Contains(currObject.GetComponent<ComponentState>().Index.ToString()))
                         {
                             hit.transform.gameObject.SetActive(false);
@@ -159,29 +162,29 @@ public class CoAxial : MonoBehaviour
 
                         }
 
-                        MeshFilter[] Objs = currObject.transform.GetComponentsInChildren<MeshFilter>();
-                        MeshFilter[] Objss = transform.parent.GetComponentsInChildren<MeshFilter>();
+                        //MeshFilter[] Objs = currObject.transform.GetComponentsInChildren<MeshFilter>();
+                        //MeshFilter[] Objss = transform.parent.GetComponentsInChildren<MeshFilter>();
 
                         // hit.transform.rotation = transform.rotation * Objs[0].gameObject.transform.parent.localRotation;
-                        foreach (MeshFilter obj in Objs)
-                        {
+                        //foreach (MeshFilter obj in Objs)
+                        //{
 
-                            if (obj.name == (currObject.gameObject.GetComponent<ComponentState>().Index.ToString() + "Mesh"))
-                            {
-                                hit.transform.rotation = transform.rotation * Quaternion.Inverse(obj.transform.localRotation);
-                                //temp = Quaternion.Inverse(obj.transform.localRotation);
-                            }
-                        }
-                        foreach (MeshFilter obj in Objss)
-                        {
+                        //    if (obj.name == (currObject.gameObject.GetComponent<ComponentState>().Index.ToString() + "Mesh"))
+                        //    {
+                        //        hit.transform.rotation = transform.rotation * Quaternion.Inverse(obj.transform.localRotation);
+                        //        //temp = Quaternion.Inverse(obj.transform.localRotation);
+                        //    }
+                        //}
+                        //foreach (MeshFilter obj in Objss)
+                        //{
 
-                            if (obj.name == (parentObject.GetComponent<ComponentState>().Index.ToString() + "Mesh"))
-                            {
-                                Debug.Log(obj.name);
-                                 hit.transform.rotation = transform.rotation * Quaternion.Inverse(obj.transform.localRotation);
-                                //temp = obj.transform.localRotation*temp;
-                            }
-                        }
+                        //    if (obj.name == (parentObject.GetComponent<ComponentState>().Index.ToString() + "Mesh"))
+                        //    {
+                        //        Debug.Log(obj.name);
+                        //         hit.transform.rotation = transform.rotation * Quaternion.Inverse(obj.transform.localRotation);
+                        //        //temp = obj.transform.localRotation*temp;
+                        //    }
+                       // }
                         foreach (Transform child in currObject.transform.Find("Colliders"))
                         {
                             parentObject.GetComponent<ComponentState>().AddCollider(child.gameObject);
