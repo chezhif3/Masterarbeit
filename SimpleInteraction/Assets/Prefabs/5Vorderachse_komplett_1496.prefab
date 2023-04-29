@@ -858,7 +858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97bcad5fdf08e134a864e4077e97c0d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PostionTolerance: 0
+  PostionTolerance: 0.02
   AngleTolerance: 0
   RayCastDirection: {x: 0, y: 0, z: 0}
   RayCastManuel: 0

@@ -140,7 +140,9 @@
      <None Include="Assets\SenseGlove\Materials\Shaders\Hologram.shader" />
      <None Include="Assets\SenseGlove\Doc\metaData.txt" />
      <None Include="Assets\SenseGlove\Plugins\Android\SGCoreCs.xml" />
+     <None Include="Assets\Success.txt" />
      <None Include="Assets\SenseGlove\Doc\ChangeLog.txt" />
+     <None Include="Assets\Mistake.txt" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.28f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

@@ -129,6 +129,7 @@ public class CoAxial : MonoBehaviour
                 {
                      Debug.Log("Inserted");
                     Debug.Log("aww" + hit.transform.gameObject.name);
+                    Debug.Log("dddistance: " + (hit.transform.position - startPosition.position));
                     // Debug.Log(startPosition.position);
                     // currObject =parentObject.transform.Find("LinearDrive").gameObject;
                     // nextObject = prefab;
@@ -189,7 +190,7 @@ public class CoAxial : MonoBehaviour
                         {
                             parentObject.GetComponent<ComponentState>().AddCollider(child.gameObject);
                         }
-                        foreach(Transform child in currObject.transform.Find("Sockts"))
+                        foreach(CoAxial child in currObject.GetComponentsInChildren<CoAxial>())
                         {
                             parentObject.GetComponent<ComponentState>().AddSockets(child.gameObject);
                         }

@@ -1,0 +1,12 @@
+RowSuccess 0: 5;1;10,47778
+RowSuccess 1: 0;1;13,86667
+RowSuccess 2: 0;2;13,90523
+RowSuccess 3: 1;1;35,14444
+RowSuccess 4: 2;1;40,12222
+RowSuccess 5: 2;2;41,07034
+RowSuccess 6: 3;1;50,65556
+RowSuccess 7: 1;1;54,2
+RowSuccess 8: 1;2;54,21605
+RowSuccess 9: 5;1;64,36667
+RowSuccess 10: 3;1;68,04445
+RowSuccess 11: 3;2;68,47128

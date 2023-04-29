@@ -9,6 +9,8 @@ public class CaptureOn : MonoBehaviour
         public int[] value;
         public ListNode next;
     }
+    public Color regular;
+    public Color current;
 
     private ListNode head;
     private ListNode curr;
@@ -32,7 +34,7 @@ public class CaptureOn : MonoBehaviour
         curr = head;
 
         ListNode node1 = new ListNode();
-        node1.value = new int[] { 1, 2 };
+        node1.value = new int[] {1,2};
         head.next = node1;
 
         ListNode node2 = new ListNode();
@@ -44,8 +46,22 @@ public class CaptureOn : MonoBehaviour
         node2.next = node3;
 
         ListNode node4 = new ListNode();
-        node4.value = new int[] { 3, 4 };
+        node4.value = new int[] { 5, 4 };
         node3.next = node4;
+
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.name.Contains(curr.value[0].ToString()) || child.gameObject.name.Contains(curr.value[1].ToString()))
+            {
+
+                child.GetComponent<Renderer>().material.color = current;
+            }
+            else
+            {
+                child.GetComponent<Renderer>().material.color = regular;
+            }
+        }
+
 
     }
 
@@ -53,6 +69,18 @@ public class CaptureOn : MonoBehaviour
     {
         curr = curr.next;
         Debug.Log("Next:" + curr.value[0]+curr.value[1]);
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.name.Contains(curr.value[0].ToString()) || child.gameObject.name.Contains(curr.value[1].ToString()))
+            {
+
+                child.GetComponent<Renderer>().material.color = current;
+            }
+            else
+            {
+                child.GetComponent<Renderer>().material.color = regular;
+            }
+        }
     }
 
     private void OnTriggerStay(Collider other)

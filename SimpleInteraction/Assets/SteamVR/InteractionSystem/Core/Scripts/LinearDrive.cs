@@ -39,6 +39,8 @@ namespace Valve.VR.InteractionSystem
 
         protected Interactable interactable;
 
+        public bool ifrotate;
+
         //public Vector3 testT;
 
 
@@ -139,7 +141,11 @@ namespace Valve.VR.InteractionSystem
             if (repositionGameObject)
             {
                 transform.position = Vector3.Lerp(startPosition.position, endPosition.position, linearMapping.value);
-                transform.Rotate(-rotateAngle * (startPosition.position - endPosition.position), Space.World);
+                if(ifrotate)
+                {
+                    transform.Rotate(-rotateAngle * (startPosition.position - endPosition.position), Space.World);
+                }
+                
             }
         }
 

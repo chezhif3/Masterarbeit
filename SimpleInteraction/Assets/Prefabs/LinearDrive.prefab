@@ -263,11 +263,12 @@ MonoBehaviour:
   startPosition: {fileID: 3650682486841850819}
   endPosition: {fileID: 7935874830882531000}
   linearMapping: {fileID: 0}
-  initReposition: 0
+  initReposition: 1
   repositionGameObject: 1
   maintainMomemntum: 1
   momemtumDampenRate: 5
   mappingFactor: 1
+  ifrotate: 0
 --- !u!114 &8058736311414183654
 MonoBehaviour:
   m_ObjectHideFlags: 0
