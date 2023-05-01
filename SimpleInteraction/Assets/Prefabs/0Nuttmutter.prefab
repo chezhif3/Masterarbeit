@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7023479742266562486}
   m_Layer: 0
   m_Name: 0Nuttmutter
-  m_TagString: Untagged
+  m_TagString: Part
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

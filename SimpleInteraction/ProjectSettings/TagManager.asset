@@ -6,6 +6,8 @@ TagManager:
   tags:
   - projectile
   - FxTemporaire
+  - Line
+  - Reference
   layers:
   - Default
   - TransparentFX

@@ -60,7 +60,7 @@ Transform:
   - {fileID: 2466045931417412883}
   m_Father: {fileID: 3393511261880474597}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 270, y: 270, z: 0}
 --- !u!1 &3393511261174124138
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 3393511261880474596}
   m_Layer: 0
   m_Name: 5Vorderachse_komplett_1496
-  m_TagString: Untagged
+  m_TagString: Part
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -413,7 +413,7 @@ MonoBehaviour:
   assemblePhase: 0
   colliderMeshPrefab: {fileID: 0}
   socketPrefab: {fileID: 0}
-  throwable: {fileID: 7891866416647517337, guid: 485fc62ee24664e49a577228e6c3c60c,
+  throwable: {fileID: 8967501252733941323, guid: b20ec83b16a37e643a6deb3c29b2b646,
     type: 3}
   linearDrive: {fileID: 8058736311414183651, guid: a697700e02b97384c9ac3ae405c22f28,
     type: 3}
@@ -422,7 +422,7 @@ MonoBehaviour:
   spawnName: 
   Index: 5
   offset: {x: 0, y: 0, z: -0.28}
-  offsetRotation: {x: 0, y: -0.70710677, z: 0, w: 0.70710677}
+  offsetRotation: {x: 0, y: 0.70710677, z: 0, w: -0.70710677}
   isPairing: 0
   RecordObj: {fileID: 5802031063011691030, guid: 0a3f08efac6840840b7278fcb2587dd3,
     type: 3}
@@ -520,7 +520,7 @@ GameObject:
   - component: {fileID: 3980285225323927189}
   m_Layer: 0
   m_Name: Line
-  m_TagString: Untagged
+  m_TagString: Line
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -742,7 +742,7 @@ GameObject:
   - component: {fileID: 1113393108401553158}
   m_Layer: 0
   m_Name: Reference
-  m_TagString: Untagged
+  m_TagString: Reference
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -885,7 +885,7 @@ GameObject:
   - component: {fileID: 9172982162977439480}
   m_Layer: 0
   m_Name: Reference
-  m_TagString: Untagged
+  m_TagString: Reference
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1039,7 +1039,7 @@ GameObject:
   - component: {fileID: 6484384108737734386}
   m_Layer: 0
   m_Name: Line
-  m_TagString: Untagged
+  m_TagString: Line
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

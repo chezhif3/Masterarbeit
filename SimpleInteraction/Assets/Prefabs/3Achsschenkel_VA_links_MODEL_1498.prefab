@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 3620547619389497632}
   m_Layer: 0
   m_Name: Line
-  m_TagString: Untagged
+  m_TagString: Line
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -433,7 +433,7 @@ GameObject:
   - component: {fileID: 3620547619874304763}
   m_Layer: 0
   m_Name: Reference
-  m_TagString: Untagged
+  m_TagString: Reference
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 3620547620376812907}
   m_Layer: 0
   m_Name: Line
-  m_TagString: Untagged
+  m_TagString: Line
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -752,7 +752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97bcad5fdf08e134a864e4077e97c0d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PostionTolerance: 0
+  PostionTolerance: 0.02
   AngleTolerance: 0
   RayCastDirection: {x: 0, y: 0, z: 0}
   RayCastManuel: 0
@@ -777,7 +777,7 @@ GameObject:
   - component: {fileID: 3620547620537088739}
   m_Layer: 0
   m_Name: 3Achsschenkel_VA_links_MODEL_1498
-  m_TagString: Untagged
+  m_TagString: Part
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -873,7 +873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97bcad5fdf08e134a864e4077e97c0d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PostionTolerance: 0
+  PostionTolerance: 0.02
   AngleTolerance: 0
   RayCastDirection: {x: 0, y: 0, z: 0}
   RayCastManuel: 0
@@ -930,7 +930,7 @@ GameObject:
   - component: {fileID: 3620547620787019229}
   m_Layer: 0
   m_Name: Reference
-  m_TagString: Untagged
+  m_TagString: Reference
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

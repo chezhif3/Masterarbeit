@@ -53,6 +53,8 @@ namespace Valve.VR.InteractionSystem
         public UnityEvent onDetachFromHand;
         public HandEvent onHeldUpdate;
 
+        //public Vector3 positionOffest;
+
 
         protected RigidbodyInterpolation hadInterpolation = RigidbodyInterpolation.None;
 
@@ -72,6 +74,8 @@ namespace Valve.VR.InteractionSystem
 
             rigidbody = GetComponent<Rigidbody>();
             rigidbody.maxAngularVelocity = 50.0f;
+
+            //attachmentOffset.position = attachmentOffset.position + positionOffest;
 
 
             if(attachmentOffset != null)

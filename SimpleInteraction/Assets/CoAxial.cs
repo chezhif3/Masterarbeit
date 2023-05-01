@@ -65,8 +65,8 @@ public class CoAxial : MonoBehaviour
             // Debug.Log(temp);
             // Debug.Log(isDone);
             // Debug.Log(startPosition.position);
-            // Debug.DrawRay(startPosition.position, RayCastDirection, Color.yellow);
-            if (Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask1)&& Physics.Raycast(startPosition.position, RayCastDirection, out hit, RayCastDistance, layerMask2))
+             Debug.DrawRay(startPosition.position, endPosition.position - startPosition.position, Color.yellow);
+            if (Physics.Raycast(startPosition.position, endPosition.position - startPosition.position, out hit, RayCastDistance, layerMask1)&& Physics.Raycast(startPosition.position, endPosition.position - startPosition.position, out hit, RayCastDistance, layerMask2))
             //if (Physics.Raycast(startPosition.position, RayCastDirection,out hit, RayCastDistance,layerMask2 ) )
             {
                 Debug.Log("Did Hit"+hit.transform.gameObject.name);
@@ -108,8 +108,20 @@ public class CoAxial : MonoBehaviour
                     //Debug.Log("Angle: " + Vector3.Angle(temp - startPosition.position, endPosition.position - startPosition.position));
                     //Debug.Log("var1: " + Vector3.Dot(temp - startPosition.position, endPosition.position - startPosition.position) + " var2: " + (temp - startPosition.position).magnitude  * Mathf.Cos(Mathf.PI * Vector3.Angle(endPosition.position - startPosition.position, temp - startPosition.position) / 180));
                     currObject.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Insertion);
+                    if (currObject.transform.Find("LinearDrive(Clone)").Find("Start")==null)
+                    {
+                        GameObject emptyGameObject = new GameObject();
+                        emptyGameObject.name = "Start";
+                        emptyGameObject.transform.SetParent(currObject.transform.Find("LinearDrive(Clone)"));
+                    }
                     currObject.transform.Find("LinearDrive(Clone)").Find("Start").position = transform.Find("Start").position;
                     currObject.transform.Find("LinearDrive(Clone)").Find("Start").SetParent(transform.Find("Start"));
+                    if (currObject.transform.Find("LinearDrive(Clone)").Find("End") == null)
+                    {
+                        GameObject emptyGameObject = new GameObject();
+                        emptyGameObject.name = "End";
+                        emptyGameObject.transform.SetParent(currObject.transform.Find("LinearDrive(Clone)"));
+                    }
                     currObject.transform.Find("LinearDrive(Clone)").Find("End").position = transform.Find("End").position;
                     currObject.transform.Find("LinearDrive(Clone)").Find("End").SetParent(transform.Find("End"));
                     //currObject.GetComponent<ComponentState>().SetStartEnd(transform.Find("Start"), transform.Find("End"));
@@ -155,7 +167,7 @@ public class CoAxial : MonoBehaviour
                         //string _name = name;
                         currObject.transform.position = parentObject.transform.Find("Sockets").Find(name).Find("Reference").position;
                         currObject.transform.rotation = parentObject.transform.Find("Sockets").Find(name).Find("Reference").rotation*Quaternion.Inverse(hit.transform.parent.parent.localRotation);
-                        Debug.Log("aee" + hit.transform.gameObject.name);
+                        Debug.Log("aee" + currObject.gameObject.name);
                         if(name.Contains(currObject.GetComponent<ComponentState>().Index.ToString()))
                         {
                             hit.transform.gameObject.SetActive(false);
@@ -189,12 +201,19 @@ public class CoAxial : MonoBehaviour
                         foreach (Transform child in currObject.transform.Find("Colliders"))
                         {
                             parentObject.GetComponent<ComponentState>().AddCollider(child.gameObject);
+                            Debug.Log(currObject.name + " colliderName: " + child.gameObject.name);
                         }
-                        foreach(CoAxial child in currObject.GetComponentsInChildren<CoAxial>())
+                        foreach(Transform child in currObject.transform.Find("Sockets"))
                         {
                             parentObject.GetComponent<ComponentState>().AddSockets(child.gameObject);
+                            Debug.Log(currObject.name + " socketName: " + child.gameObject.name);
                         }
-                        Destroy(currObject);
+                        Debug.Log("now CurrObj:" + currObject.name);
+                        Debug.Log("now HitObj:" + hit.transform.gameObject.name);
+                        currObject.SetActive(false);
+                        hit.transform.localPosition = Vector3.zero;
+                        hit.transform.localRotation = Quaternion.identity;
+                        //Destroy(currObject);
                         object[] parameters = new object[] { currObject.GetComponent<ComponentState>().Index, 2, Time.time };
                         RecordObj.SendMessage("AttemptSuccess", parameters);
                         RecordObj.SendMessage("printRecord");

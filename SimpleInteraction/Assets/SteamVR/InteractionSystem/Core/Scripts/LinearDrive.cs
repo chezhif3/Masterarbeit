@@ -32,7 +32,10 @@ namespace Valve.VR.InteractionSystem
         protected float preDirection;
         protected float currDirection;
         protected float rotateAngle;
-        //protected Vector3 rotateAxis;
+
+        //protected Vector3 preAxis;
+        //protected Vector3 currAxis;
+        protected Quaternion selfRotate;
 
         protected float mappingChangeRate;
         protected int sampleCount = 0;
@@ -50,6 +53,10 @@ namespace Valve.VR.InteractionSystem
             endPosition = this.transform.Find("End");
             mappingChangeSamples = new float[numMappingChangeSamples];
             interactable = GetComponent<Interactable>();
+
+          // Quaternion temp1 = Quaternion.FromToRotation(transform.rotation * Vector3.up, endPosition.position - startPosition.position);
+           
+
         }
 
         protected virtual void Start()
@@ -68,6 +75,9 @@ namespace Valve.VR.InteractionSystem
             linearMapping.value = CalculateLinearMapping(transform);
             initialMappingOffset = linearMapping.value;
             currDirection = transform.localEulerAngles.z;
+
+            selfRotate = Quaternion.Inverse(transform.rotation) * Quaternion.LookRotation(endPosition.position - startPosition.position) ;
+
 
             //testT = transform.position;
             //transform.position = startPosition.position + (endPosition.position - startPosition.position).normalized * Vector3.Dot(transform.position - startPosition.position, endPosition.position - startPosition.position);
@@ -161,7 +171,7 @@ namespace Valve.VR.InteractionSystem
         }
 
 
-        protected virtual void Update()
+        protected virtual void FixedUpdate()
         {
             //Debug.DrawRay(startPosition.position, testT - startPosition.position, Color.yellow);
             if (maintainMomemntum && mappingChangeRate != 0.0f)
@@ -184,9 +194,10 @@ namespace Valve.VR.InteractionSystem
                 if (transform != null)
                 {
                     transform.position = Vector3.Lerp(startPosition.position, endPosition.position, linearMapping.value);
-                    // transform.Rotate(startPosition.position - endPosition.position, Space.World);
+                    transform.rotation =  Quaternion.LookRotation(endPosition.position - startPosition.position)* Quaternion.Inverse(selfRotate) ;
+    
                 }
-                transform.position = Vector3.Lerp(startPosition.position, endPosition.position, linearMapping.value);
+               // transform.position = Vector3.Lerp(startPosition.position, endPosition.position, linearMapping.value);
             }
         }
     }

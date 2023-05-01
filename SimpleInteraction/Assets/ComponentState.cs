@@ -29,6 +29,7 @@ public class ComponentState : MonoBehaviour
     public bool isPairing;
 
     public GameObject RecordObj;
+    public GameObject WorkStation;
 
     //private var tempObject;
 
@@ -39,6 +40,7 @@ public class ComponentState : MonoBehaviour
 
     void Start()
     {
+        WorkStation = GameObject.Find("Cube");
         RecordObj = GameObject.Find("Profiling");
         spawnName = Index.ToString()+"intanPoint";
         Debug.Log( spawnName);
@@ -162,7 +164,7 @@ public class ComponentState : MonoBehaviour
         Debug.Log(name);
         Debug.Log("ColliderUpdated");
         Debug.Log(transform.Find("Throwable(Clone)").Find("Colliders").GetChild(0).gameObject.name);
-
+        WorkStation.SendMessage("checkMode");
     }
 
     public void SetStartEnd(Transform start, Transform end)
@@ -275,7 +277,7 @@ public class ComponentState : MonoBehaviour
 
     public void AddSockets(GameObject _gameObject)
     {
-        GameObject obj = Instantiate(gameObject,_gameObject.transform.position, _gameObject.transform.rotation);
+        GameObject obj = Instantiate(_gameObject,_gameObject.transform.position, _gameObject.transform.rotation);
         obj.transform.parent = transform.Find("Sockets");
         collidersUpdate();
     }
@@ -317,7 +319,7 @@ public class ComponentState : MonoBehaviour
     void OnDestroy()
     {
         Debug.Log("Respawn");
-        Spawner.SendMessage("spawn");
+        Spawner.SendMessage("reSpawn",this.gameObject);
     }
 
     void EnableColliders(GameObject gameObject,bool ifenable)

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2744377879059970312}
   m_Layer: 0
   m_Name: Reference
-  m_TagString: Untagged
+  m_TagString: Reference
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 2744377880225830965}
   m_Layer: 0
   m_Name: Line
-  m_TagString: Untagged
+  m_TagString: Line
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -563,7 +563,7 @@ GameObject:
   - component: {fileID: 2744377880256088260}
   m_Layer: 0
   m_Name: 1Radnabe_MODEL_1228 (1)
-  m_TagString: Untagged
+  m_TagString: Part
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

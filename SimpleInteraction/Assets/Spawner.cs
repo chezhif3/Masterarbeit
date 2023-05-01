@@ -17,5 +17,12 @@ public class Spawner : MonoBehaviour
         Instantiate(objectToSpawn,transform.position,transform.rotation);
     }
 
+    private void reSpawn(GameObject obj)
+    {
+        Debug.Log("Spawn: " + objectToSpawn.name);
+        var newObj = Instantiate(obj, transform.position, transform.rotation);
+        newObj.SetActive(true);
+    }
+
 
 }
