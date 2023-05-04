@@ -137,6 +137,7 @@ MonoBehaviour:
   isPairing: 0
   RecordObj: {fileID: 5802031063011691030, guid: 0a3f08efac6840840b7278fcb2587dd3,
     type: 3}
+  WorkStation: {fileID: 0}
 --- !u!1 &4885316704837895999
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4885316704837895998
 Transform:
   m_ObjectHideFlags: 0

@@ -826,6 +826,7 @@ MonoBehaviour:
   isPairing: 0
   RecordObj: {fileID: 5802031063011691030, guid: 0a3f08efac6840840b7278fcb2587dd3,
     type: 3}
+  WorkStation: {fileID: 0}
 --- !u!1 &3620547620594554439
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ TagManager:
   - FxTemporaire
   - Line
   - Reference
+  - Part
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - CoAxialB
   - Component
   - Hands
-  - 
+  - Screws
   - 
   - 
   - 
