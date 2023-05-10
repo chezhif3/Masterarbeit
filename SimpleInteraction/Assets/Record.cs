@@ -15,6 +15,9 @@ public class Record : MonoBehaviour
     public string filePath1 = "M:/privat/test/Update/SimpleInteraction/Assets/Mistake.txt"; // 
     public string filePath2 = "M:/privat/test/Update/SimpleInteraction/Assets/Success.txt"; // 
 
+    public AudioSource successAudio;                       
+    public AudioSource mistakeAudio;   
+
     void Start()
     {
         // Start is called before the first frame update
@@ -24,11 +27,13 @@ public class Record : MonoBehaviour
 
     void AttemptMistake(object[] attempt)
     {
+        mistakeAudio.Play();
         arrayMistake.Add(new object[] {attempt[0], attempt[1], attempt[2]});
     }
 
     void AttemptSuccess(object[] attempt)
     {
+        successAudio.Play();
         arraySuccess.Add(new object[] { attempt[0], attempt[1], attempt[2]});
     }
 

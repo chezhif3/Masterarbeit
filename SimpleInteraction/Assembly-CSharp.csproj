@@ -117,6 +117,7 @@
      <Compile Include="Assets\SenseGlove\Scripts\Feedback\SG_ObjectVibration.cs" />
      <Compile Include="Assets\SenseGlove\Scripts\VR\SG_XR_RoomSetup.cs" />
      <Compile Include="Assets\CaptureOn.cs" />
+     <Compile Include="Assets\AudioManager.cs" />
      <Compile Include="Assets\SenseGlove\Scripts\Controls\SG_ConfirmZone.cs" />
      <Compile Include="Assets\ComponentState.cs" />
      <Compile Include="Assets\CoAxial.cs" />
