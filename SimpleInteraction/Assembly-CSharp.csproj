@@ -127,6 +127,7 @@
      <Compile Include="Assets\SenseGlove\Scripts\Tracking\SG_HandPhysics.cs" />
      <Compile Include="Assets\SenseGlove\Scripts\Util\SG_IMUTracking.cs" />
      <Compile Include="Assets\SenseGlove\Scripts\Util\SG_ScriptDetector.cs" />
+     <Compile Include="Assets\screwController.cs" />
      <Compile Include="Assets\SenseGlove\Scripts\Interaction\SG_BreakableContainer.cs" />
      <Compile Include="Assets\SenseGlove\Scripts\Util\SG_SceneControl.cs" />
      <Compile Include="Assets\SenseGlove\Scripts\Tracking\SG_FingerPassThrough.cs" />
@@ -139,7 +140,6 @@
      <Compile Include="Assets\SenseGlove\Scripts\Tracking\SG_HandModelInfo.cs" />
      <Compile Include="Assets\SenseGlove\Examples\Resources\SGEx_GloveDiagnostics.cs" />
      <Compile Include="Assets\SenseGlove\Scripts\Util\SG_HandStateIndicator.cs" />
-     <Compile Include="Assets\screwController.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\SenseGlove\Plugins\SGCoreCs.xml" />
@@ -149,6 +149,7 @@
      <None Include="Assets\SenseGlove\Materials\Shaders\Hologram.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\SenseGlove\Doc\metaData.txt" />
+     <None Include="Assets\Irru.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />

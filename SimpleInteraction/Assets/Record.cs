@@ -8,15 +8,18 @@ public class Record : MonoBehaviour
 {
     public List<object[]> arrayMistake;
     public List<object[]> arraySuccess;
+    public List<object[]> arrayIrru;
 
     public string fileName1 = "Mistake.txt"; // 
     public string fileName2 = "Success.txt"; // 
 
     public string filePath1 = "M:/privat/test/Update/SimpleInteraction/Assets/Mistake.txt"; // 
     public string filePath2 = "M:/privat/test/Update/SimpleInteraction/Assets/Success.txt"; // 
+    public string filePath3 = "M:/privat/test/Update/SimpleInteraction/Assets/Irru.txt"; // 
 
     public AudioSource successAudio;                       
-    public AudioSource mistakeAudio;   
+    public AudioSource mistakeAudio;
+    public AudioSource finishAudio;
 
     void Start()
     {
@@ -25,8 +28,9 @@ public class Record : MonoBehaviour
         arraySuccess = new List<object[]>();
     }
 
-    void AttemptMistake(object[] attempt)
+    void AttemptMistake(object[] attempt,int sound = 0)
     {
+
         mistakeAudio.Play();
         arrayMistake.Add(new object[] {attempt[0], attempt[1], attempt[2]});
     }
@@ -35,6 +39,17 @@ public class Record : MonoBehaviour
     {
         successAudio.Play();
         arraySuccess.Add(new object[] { attempt[0], attempt[1], attempt[2]});
+    }
+
+    void AttemptUnregular(object[] attempt)
+    {
+        successAudio.Play();
+        arrayIrru.Add(new object[] { attempt[0], attempt[1], attempt[2] });
+    }
+
+    void AssemblyFinish()
+    {
+        finishAudio.Play();
     }
 
     void printRecord()
@@ -91,6 +106,15 @@ public class Record : MonoBehaviour
                 string rowSuccess = "RowSuccess " + i + ": " + string.Join(";", arraySuccess[i]);
                 writer.WriteLine(rowSuccess);
                 Debug.Log("pathb: "+filePath2);
+            }
+        }
+        using (StreamWriter writer = new StreamWriter("M:/privat/test/Update/SimpleInteraction/Assets/Irru.txt"))
+        {
+            for (int i = 0; i < arrayIrru.Count; i++)
+            {
+                string rowIrru = "RowIrru " + i + ": " + string.Join(";", arrayIrru[i]);
+                writer.WriteLine(rowIrru);
+                Debug.Log("pathb: " + filePath3);
             }
         }
         Debug.Log("-----ending-----");

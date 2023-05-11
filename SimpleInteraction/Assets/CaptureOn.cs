@@ -55,11 +55,11 @@ public class CaptureOn : MonoBehaviour
         node2.next = node3;
 
         heads = new StringNode();
-        heads.value = "Place place disc on the left wheel hub";
+        heads.value = "Mount break disc the disc on the left wheel hub";
         currs = heads;
 
         StringNode nodes1 = new StringNode();
-        nodes1.value = "Mount the assembled wheel hub onto the left support arm";
+        nodes1.value = "Place the assembled wheel hub onto the left support arm";
         heads.next = nodes1;
 
         StringNode nodes2 = new StringNode();
@@ -96,6 +96,7 @@ public class CaptureOn : MonoBehaviour
         }
         else
         {
+            transform.Find("Text").gameObject.SetActive(false);
             GameObject[] foundGameObjects = GameObject.FindGameObjectsWithTag("Part");
             foreach (GameObject foundObject in foundGameObjects)
             {
@@ -138,7 +139,12 @@ public class CaptureOn : MonoBehaviour
         }
         else
         {
-            transform.Find("Text").GetComponent<TMPro.TextMeshPro>().text = "Finished!";
+            if(WorkMode == 1)
+            {
+                transform.Find("Text").GetComponent<TMPro.TextMeshPro>().text = "Finished!";
+            }
+       
+            RecordObj.SendMessage("AssemblyFinish");
             Debug.Log("Finished!");
         }
     }
@@ -189,7 +195,7 @@ public class CaptureOn : MonoBehaviour
                             break;
                         default:
                             parameters = new object[] { currInt, 2, Time.time };
-                            RecordObj.SendMessage("AttemptMistake", parameters);
+                            RecordObj.SendMessage("AttemptIrru", parameters);
                             RecordObj.SendMessage("printRecord");
                             break;
 
