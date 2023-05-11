@@ -823,6 +823,7 @@ MonoBehaviour:
   Index: 3
   offset: {x: 0, y: 0, z: 0}
   offsetRotation: {x: -0.00000003090862, y: 0.70710677, z: -0.70710677, w: -0.00000003090862}
+  needSecure: 0
   isPairing: 0
   RecordObj: {fileID: 5802031063011691030, guid: 0a3f08efac6840840b7278fcb2587dd3,
     type: 3}

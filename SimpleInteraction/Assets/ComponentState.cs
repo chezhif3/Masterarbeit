@@ -12,6 +12,7 @@ public class ComponentState : MonoBehaviour
         PairingA = 1,
         PairingB = 2,
         Insertion = 3,
+        Secure = 4
     };
 
     public AssemblePhase assemblePhase;
@@ -25,6 +26,7 @@ public class ComponentState : MonoBehaviour
     public int Index;
     public Vector3 offset;
     public Quaternion offsetRotation;
+    public bool needSecure = false;
 
     public bool isPairing;
 
@@ -55,6 +57,10 @@ public class ComponentState : MonoBehaviour
                 transform.Find("Throwable(Clone)").Find("Colliders").gameObject.SetActive(true);
                 transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(false);
                 transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
+                if(needSecure)
+                {
+                    transform.Find("Secure").gameObject.SetActive(false);
+                }
                 collidersUpdate();
                 transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
                 assemblePhase = AssemblePhase.Identification;
@@ -64,6 +70,10 @@ public class ComponentState : MonoBehaviour
                 transform.Find("Throwable(Clone)").Find("Colliders").gameObject.SetActive(true);
                 transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(true);
                 transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
+                if (needSecure)
+                {
+                    transform.Find("Secure").gameObject.SetActive(false);
+                }
                 collidersUpdate();
                 transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = false;
                 transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().drag = 50;
@@ -75,14 +85,25 @@ public class ComponentState : MonoBehaviour
                 transform.Find("Throwable(Clone)").Find("Colliders").gameObject.SetActive(true);
                 transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(false);
                 transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
+                if (needSecure)
+                {
+                    transform.Find("Secure").gameObject.SetActive(false);
+                }
                 collidersUpdate();
                 transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
                 assemblePhase = AssemblePhase.PairingB;
                 break;
             case AssemblePhase.Insertion:
+                if (needSecure)
+                {
+                    transform.Find("Secure").gameObject.SetActive(false);
+                }
                 transform.Find("LinearDrive(Clone)").gameObject.SetActive(true);
                 assemblePhase = AssemblePhase.Insertion;
                 collidersUpdate();
+                break;
+            case AssemblePhase.Secure:
+                transform.Find("LinearDrive(Clone)").gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationY;
                 break;
         }
     }
@@ -167,6 +188,87 @@ public class ComponentState : MonoBehaviour
         WorkStation.SendMessage("checkMode");
     }
 
+
+    private void collidersUpdateId()
+    {
+        colliderMeshPrefab = transform.Find("Throwable(Clone)").Find("Colliders").gameObject;
+        socketPrefab = transform.Find("Sockets").gameObject;
+        for (int i = 0; i < transform.Find("Throwable(Clone)").Find("Colliders").childCount; i++)
+        {
+            Destroy(transform.Find("Throwable(Clone)").Find("Colliders").GetChild(i).gameObject);
+        }
+        for (int i = 0; i < transform.Find("Throwable(Clone)").Find("Sockets").childCount; i++)
+        {
+            Destroy(transform.Find("Throwable(Clone)").Find("Sockets").GetChild(i).gameObject);
+        }
+        for (int i = 0; i < transform.Find("LinearDrive(Clone)").Find("Colliders").childCount; i++)
+        {
+            Destroy(transform.Find("LinearDrive(Clone)").Find("Colliders").GetChild(i).gameObject);
+        }
+        Debug.Log("spwan mesh update");
+        Debug.Log(colliderMeshPrefab.name);
+        Instantiate(colliderMeshPrefab, transform.Find("Throwable(Clone)").Find("Colliders"));
+        if (socketPrefab != null)
+        {
+            Instantiate(socketPrefab, transform.Find("Throwable(Clone)").Find("Sockets"));
+        }
+        Instantiate(colliderMeshPrefab, transform.Find("LinearDrive(Clone)").Find("Colliders"));
+
+        if (transform.Find("Throwable(Clone)").Find("Colliders").gameObject.activeSelf)
+        {
+            GameObject currOb = transform.Find("Throwable(Clone)").Find("Colliders").gameObject;
+            for (int i = 0; i < currOb.transform.childCount; i++)
+            {
+                currOb.transform.GetChild(i).gameObject.SetActive(true);
+                Debug.Log(transform.Find("Throwable(Clone)").Find("Colliders").GetChild(i).gameObject.name);
+            }
+        }
+        else
+        {
+            GameObject currOb = transform.Find("Throwable(Clone)").Find("Colliders").gameObject;
+            for (int i = 0; i < currOb.transform.childCount; i++)
+            {
+                currOb.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+        if (transform.Find("Throwable(Clone)").Find("Sockets").gameObject.activeSelf)
+        {
+            GameObject currOb = transform.Find("Throwable(Clone)").Find("Sockets").gameObject;
+            for (int i = 0; i < currOb.transform.childCount; i++)
+            {
+                currOb.transform.GetChild(i).gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            GameObject currOb = transform.Find("Throwable(Clone)").Find("Sockets").gameObject;
+            for (int i = 0; i < currOb.transform.childCount; i++)
+            {
+                currOb.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+        if (transform.Find("LinearDrive(Clone)").Find("Colliders").gameObject.activeSelf)
+        {
+            GameObject currOb = transform.Find("LinearDrive(Clone)").Find("Colliders").gameObject;
+            for (int i = 0; i < currOb.transform.childCount; i++)
+            {
+                currOb.transform.GetChild(i).gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            GameObject currOb = transform.Find("LinearDrive(Clone)").Find("Colliders").gameObject;
+            for (int i = 0; i < currOb.transform.childCount; i++)
+            {
+                currOb.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+        Debug.Log(name);
+        Debug.Log("ColliderUpdated");
+        Debug.Log(transform.Find("Throwable(Clone)").Find("Colliders").GetChild(0).gameObject.name);
+        WorkStation.SendMessage("checkMode");
+    }
+
     public void SetStartEnd(Transform start, Transform end)
     {
         Debug.Log("Passing StartEnd");
@@ -209,7 +311,11 @@ public class ComponentState : MonoBehaviour
                     transform.Find("Throwable(Clone)").Find("Colliders").gameObject.SetActive(true);
                     transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(false);
                     transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
-                    collidersUpdate();
+                    if (needSecure)
+                    {
+                        transform.Find("Secure").gameObject.SetActive(false);
+                    }
+                    collidersUpdateId();
                     EnableColliders(transform.Find("LinearDrive(Clone)").Find("Colliders").gameObject, false);
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
                     Debug.Log("gravityid"+ transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity);
@@ -222,6 +328,10 @@ public class ComponentState : MonoBehaviour
                     transform.Find("Throwable(Clone)").Find("Colliders").gameObject.SetActive(true);
                     transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(true);
                     transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
+                    if (needSecure)
+                    {
+                        transform.Find("Secure").gameObject.SetActive(false);
+                    }
                     collidersUpdate();
                     EnableColliders(transform.Find("Throwable(Clone)").Find("Colliders").gameObject, true);
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = false;
@@ -240,6 +350,10 @@ public class ComponentState : MonoBehaviour
                     transform.Find("Throwable(Clone)").Find("Colliders").gameObject.SetActive(true);
                     transform.Find("Throwable(Clone)").Find("Sockets").gameObject.SetActive(false);
                     transform.Find("LinearDrive(Clone)").gameObject.SetActive(false);
+                    if (needSecure)
+                    {
+                        transform.Find("Secure").gameObject.SetActive(false);
+                    }
                     collidersUpdate();
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().useGravity = true;
                     transform.Find("Throwable(Clone)").gameObject.GetComponent<Rigidbody>().isKinematic = false;
@@ -254,9 +368,21 @@ public class ComponentState : MonoBehaviour
                     transform.Find("LinearDrive(Clone)").position = _position;
                     transform.Find("LinearDrive(Clone)").rotation = _rotation;
                     transform.Find("LinearDrive(Clone)").gameObject.SetActive(true);
+                    if (needSecure)
+                    {
+                        transform.Find("Secure").gameObject.SetActive(false);
+                    }
                     collidersUpdate();
                     EnableColliders(transform.Find("LinearDrive(Clone)").Find("Colliders").gameObject, true);
                     parameters = new object[] { Index, 2, Time.time };
+                    RecordObj.SendMessage("AttemptSuccess", parameters);
+                    RecordObj.SendMessage("printRecord");
+                    break;
+                case AssemblePhase.Secure:
+                    transform.Find("LinearDrive(Clone)").gameObject.GetComponent<Valve.VR.InteractionSystem.Interactable>().highlightOnHover = false;
+                    transform.Find("LinearDrive(Clone)").gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationY;
+                    transform.Find("Secure").gameObject.SetActive(true);
+                    parameters = new object[] { Index, 3, Time.time };
                     RecordObj.SendMessage("AttemptSuccess", parameters);
                     RecordObj.SendMessage("printRecord");
                     break;

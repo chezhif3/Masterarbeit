@@ -145,14 +145,14 @@ public class CoAxial : MonoBehaviour
                     // Debug.Log(startPosition.position);
                     // currObject =parentObject.transform.Find("LinearDrive").gameObject;
                     // nextObject = prefab;
-                    if ((hit.transform.position - startPosition.position).magnitude > ((endPosition.position - startPosition.position).magnitude-0.01))
-                    {
-                        object[] parameters = new object[] { currObject.GetComponent<ComponentState>().Index, 3, Time.time };
-                        RecordObj.SendMessage("AttemptMistake", parameters);
-                        RecordObj.SendMessage("printRecord");
-                        Destroy(currObject);
-                    }
-                    else if ((hit.transform.position - startPosition.position).magnitude <= PostionTolerance )
+                    //if ((hit.transform.position - startPosition.position).magnitude > ((endPosition.position - startPosition.position).magnitude-0.01))
+                    //{
+                    //    object[] parameters = new object[] { currObject.GetComponent<ComponentState>().Index, 3, Time.time };
+                    //    RecordObj.SendMessage("AttemptMistake", parameters);
+                    //    RecordObj.SendMessage("printRecord");
+                    //    Destroy(currObject);
+                    //}
+                    if ((hit.transform.position - startPosition.position).magnitude <= PostionTolerance )
                     //&&( ((currObject.transform.eulerAngles.x- transform.eulerAngles.x)%90 <= AngleTolerance )| (currObject.transform.eulerAngles.x - transform.eulerAngles.x)<= AngleTolerance ))
                     {
                         // Destroy(currObject);
@@ -162,13 +162,12 @@ public class CoAxial : MonoBehaviour
                         // transform.Find("Solution").gameObject.SetActive(true);
                         // transform.gameObject.SetActive(false);
                         //transform.parent.parent.parent.parent.gameObject.GetComponent<ComponentState>().AddCollider();
-                        WorkStation.SendMessage("NextStep");
                         currObject.SetActive(false);
                         //string _name = name;
                         currObject.transform.position = parentObject.transform.Find("Sockets").Find(name).Find("Reference").position;
-                        currObject.transform.rotation = parentObject.transform.Find("Sockets").Find(name).Find("Reference").rotation*Quaternion.Inverse(hit.transform.parent.parent.localRotation);
+                        currObject.transform.rotation = parentObject.transform.Find("Sockets").Find(name).Find("Reference").rotation * Quaternion.Inverse(hit.transform.parent.parent.localRotation);
                         Debug.Log("aee" + currObject.gameObject.name);
-                        if(name.Contains(currObject.GetComponent<ComponentState>().Index.ToString()))
+                        if (name.Contains(currObject.GetComponent<ComponentState>().Index.ToString()))
                         {
                             hit.transform.gameObject.SetActive(false);
                             parentObject.GetComponent<ComponentState>().CloseSocket(currObject.GetComponent<ComponentState>().Index);
@@ -197,28 +196,39 @@ public class CoAxial : MonoBehaviour
                         //         hit.transform.rotation = transform.rotation * Quaternion.Inverse(obj.transform.localRotation);
                         //        //temp = obj.transform.localRotation*temp;
                         //    }
-                       // }
+                        // }
                         foreach (Transform child in currObject.transform.Find("Colliders"))
                         {
                             parentObject.GetComponent<ComponentState>().AddCollider(child.gameObject);
                             Debug.Log(currObject.name + " colliderName: " + child.gameObject.name);
                         }
-                        foreach(Transform child in currObject.transform.Find("Sockets"))
+                        foreach (Transform child in currObject.transform.Find("Sockets"))
                         {
                             parentObject.GetComponent<ComponentState>().AddSockets(child.gameObject);
                             Debug.Log(currObject.name + " socketName: " + child.gameObject.name);
                         }
-                        Debug.Log("now CurrObj:" + currObject.name);
-                        Debug.Log("now HitObj:" + hit.transform.gameObject.name);
-                        currObject.SetActive(false);
-                        hit.transform.localPosition = Vector3.zero;
-                        hit.transform.localRotation = Quaternion.identity;
-                        //Destroy(currObject);
-                        object[] parameters = new object[] { currObject.GetComponent<ComponentState>().Index, 2, Time.time };
-                        RecordObj.SendMessage("AttemptSuccess", parameters);
-                        RecordObj.SendMessage("printRecord");
+                        if(currObject.GetComponent<ComponentState>().needSecure)
+                        {
+                            foreach (Transform child in currObject.transform.Find("Secure"))
+                            {
+                                parentObject.GetComponent<ComponentState>().AddCollider(child.gameObject);
+                                Debug.Log(currObject.name + " colliderName: " + child.gameObject.name);
+                            }
+                        }
+                        else
+                        {
+                            WorkStation.SendMessage("NextStep");
+                            Debug.Log("now CurrObj:" + currObject.name);
+                            Debug.Log("now HitObj:" + hit.transform.gameObject.name);
+                            currObject.SetActive(false);
+                            hit.transform.localPosition = Vector3.zero;
+                            hit.transform.localRotation = Quaternion.identity;
+                            //Destroy(currObject);
+                            object[] parameters = new object[] { currObject.GetComponent<ComponentState>().Index, 2, Time.time };
+                            RecordObj.SendMessage("AttemptSuccess", parameters);
+                            RecordObj.SendMessage("printRecord");
+                        }
                         isDone = true;
-                      
                     }
                 }
             }

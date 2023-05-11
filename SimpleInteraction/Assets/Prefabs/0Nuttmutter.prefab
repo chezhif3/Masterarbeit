@@ -141,9 +141,11 @@ MonoBehaviour:
   Index: 0
   offset: {x: 0, y: 0, z: 0}
   offsetRotation: {x: 0, y: 0, z: 0, w: 0}
+  needSecure: 0
   isPairing: 0
   RecordObj: {fileID: 5802031063011691030, guid: 0a3f08efac6840840b7278fcb2587dd3,
     type: 3}
+  WorkStation: {fileID: 0}
 --- !u!1 &7023479742371497242
 GameObject:
   m_ObjectHideFlags: 0

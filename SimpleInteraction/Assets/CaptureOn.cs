@@ -55,7 +55,7 @@ public class CaptureOn : MonoBehaviour
         node2.next = node3;
 
         heads = new StringNode();
-        heads.value = "Place brake disc on left wheel hub";
+        heads.value = "Place place disc on the left wheel hub";
         currs = heads;
 
         StringNode nodes1 = new StringNode();
@@ -209,18 +209,18 @@ public class CaptureOn : MonoBehaviour
         {
             //Debug.Log("TestOb");
             //Instantiate(testOb,other.transform.position,other.transform.rotation);
-            if (other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject != null&& other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject.GetComponent<ComponentState>().assemblePhase != ComponentState.AssemblePhase.Insertion)
+            if (other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject != null && other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject.GetComponent<ComponentState>().assemblePhase == ComponentState.AssemblePhase.Insertion)
             {
                 other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification);
-                other.gameObject.transform.parent.gameObject.SetActive(false);
-                other.gameObject.transform.localPosition = Vector3.zero;
-                other.gameObject.transform.localRotation = Quaternion.identity;
-                //Destroy(other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject);
+                //other.gameObject.transform.parent.gameObject.SetActive(false);
+                //other.gameObject.transform.localPosition = Vector3.zero;
+                //other.gameObject.transform.localRotation = Quaternion.identity;
+                Destroy(other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().capturedObject);
                 countCurrColliders--;
             }
         }
-            other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification);
-            countCurrColliders--;
+        other.gameObject.transform.parent.gameObject.GetComponent<ComponentState>().PhaseChange(ComponentState.AssemblePhase.Identification);
+        countCurrColliders--;
     }
 
     public void checkMode()

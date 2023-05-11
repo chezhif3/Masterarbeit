@@ -9,6 +9,8 @@ TagManager:
   - Line
   - Reference
   - Part
+  - Drill
+  - screw
   layers:
   - Default
   - TransparentFX
@@ -21,8 +23,8 @@ TagManager:
   - Component
   - Hands
   - Screws
-  - 
-  - 
+  - _screw
+  - Drill
   - 
   - 
   - 
